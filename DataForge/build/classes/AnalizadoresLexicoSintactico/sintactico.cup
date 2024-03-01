@@ -1,0 +1,30 @@
+package AnalizadoresLexicoSintactico;
+import java_cup.runtime.*;
+
+parser code 
+{:
+        
+        public void syntax_error(Symbol s){
+            System.out.println("Error Sintactico: "+s.value+" , Linea: "+s.left+" Columna: "+s.right);
+        }
+        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+            System.out.println("Error SintActico unrecovered: "+s.value+" , linea: "+s.left+" columna: "+s.right);
+        }
+:}
+
+terminal String VAR, DOUBLE, CHAR, END;
+
+terminal String MENOS, DOS_PUNTOS, MENOR_QUE, PUNTO_COMA, IGUAL, MAYOR_QUE, ARROBA, CORCHETE_IZQUIERDO, CORCHETE_DERECHO;
+terminal String PARENTESIS_IZQUIERDO, PARENTESIS_DERECHO, COMA;
+
+terminal String RESTA, SUMA, EXEC, MODA, MEDIA, PRINT, COLUMN, CONSOLE, MEDIANA, GRAPHBAR, GRAPHPIE, GRAPHLINE, HISTOGRAM;
+terminal String CADENA, ENTERO, DECIMAL , EXPRESION, PROGRAM, END_PROGRAM, ARRAY, DIVISION, MAXIMO, MINIMO, MODULO, MULTIPLICACION;
+terminal String EJEX, EJEY, LABEL, TITULO, VALUES, TITULOX, TITULOY;
+
+non terminal programa, declaracion, asignacion;
+
+start with programa;
+
+programa ::= PROGRAM declaracion END_PROGRAM;
+
+declaracion ::= VAR DOS_PUNTOS CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO DOS_PUNTOS DOS_PUNTOS CADENA END PUNTO_COMA;
