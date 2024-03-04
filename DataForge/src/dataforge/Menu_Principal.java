@@ -8,6 +8,7 @@ import ReporteHTML.ReporteHTML;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import Instrucciones.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -215,7 +216,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(361, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,7 +341,6 @@ public class Menu_Principal extends javax.swing.JFrame {
             Parser analizador_sintactico = new Parser(analizador_lexico);
             analizador_sintactico.parse(); 
             
-          
             System.out.println("-------");
             System.out.println(analizador_lexico.lexicalErrors.size());
             System.out.println("-------");
@@ -349,10 +349,15 @@ public class Menu_Principal extends javax.swing.JFrame {
             
             AppState.listaToken.addAll(analizador_lexico.tokens);
             AppState.listaErrorLexico.addAll(analizador_lexico.lexicalErrors);
+            //AppState.listaVariable.addAll(analizador_sintactico.variables);
             
             for (Token token : AppState.listaToken) {
-                System.out.println("Lexema: " + token.getTipo());
+                System.out.println("Lexema: " + token.getLexema() +" -- "+ token.getTipo());
             }
+            System.out.println("----------------------------");
+            for (Variable variable : AppState.listaVariable) {
+                System.out.println("Nombre: " + variable.getID() +" -- "+ "Valor: " +variable.getValor());
+            }         
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);

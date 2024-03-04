@@ -1,5 +1,4 @@
 package AnalizadoresLexicoSintactico;
-
 /**
  *
  * @author manuel

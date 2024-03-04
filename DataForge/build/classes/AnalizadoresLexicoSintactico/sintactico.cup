@@ -21,10 +21,46 @@ terminal String RESTA, SUMA, EXEC, MODA, MEDIA, PRINT, COLUMN, CONSOLE, MEDIANA,
 terminal String CADENA, ENTERO, DECIMAL , EXPRESION, PROGRAM, END_PROGRAM, ARRAY, DIVISION, MAXIMO, MINIMO, MODULO, MULTIPLICACION;
 terminal String EJEX, EJEY, LABEL, TITULO, VALUES, TITULOX, TITULOY;
 
-non terminal programa, declaracion, asignacion;
+//------------------------------------------------------------------------------
+non terminal programa, declaraciones, declaracion, tipo;
 
+non terminal asignacion_variable, valor_variable;
+
+non terminal asignacion_arreglo, valor_arreglo, contenido_array;
+
+non terminal asignacion_aritmetica, valor_aritmetica, operacion_aritmetica;
+//------------------------------------------------------------------------------
 start with programa;
 
-programa ::= PROGRAM declaracion END_PROGRAM;
+programa ::= PROGRAM declaraciones END_PROGRAM;
 
-declaracion ::= VAR DOS_PUNTOS CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO DOS_PUNTOS DOS_PUNTOS CADENA END PUNTO_COMA;
+declaraciones ::= declaracion | declaracion declaraciones;
+
+//------------------------------------------------------------------------------
+declaracion ::= VAR DOS_PUNTOS tipo DOS_PUNTOS DOS_PUNTOS EXPRESION asignacion_variable END PUNTO_COMA;
+
+tipo ::= CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO |DOUBLE;
+
+asignacion_variable ::= MENOR_QUE MENOS valor_variable;
+
+valor_variable ::= ENTERO | DECIMAL | CADENA |EXPRESION;
+
+//------------------------------------------------------------------------------
+declaracion ::= ARRAY DOS_PUNTOS tipo DOS_PUNTOS DOS_PUNTOS ARROBA EXPRESION asignacion_arreglo END PUNTO_COMA;
+
+asignacion_arreglo ::= MENOR_QUE MENOS CORCHETE_IZQUIERDO contenido_array CORCHETE_DERECHO;
+
+contenido_array ::= valor_variable contenido_array | COMA valor_variable contenido_array | /* ε */;
+
+//------------------------------------------------------------------------------
+declaracion ::= VAR DOS_PUNTOS tipo DOS_PUNTOS DOS_PUNTOS EXPRESION asignacion_aritmetica END PUNTO_COMA;
+
+asignacion_aritmetica ::= MENOR_QUE MENOS operacion_aritmetica;
+
+operacion_aritmetica ::= SUMA PARENTESIS_IZQUIERDO              valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
+                        | RESTA PARENTESIS_IZQUIERDO            valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
+                        | MULTIPLICACION PARENTESIS_IZQUIERDO   valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
+                        | DIVISION PARENTESIS_IZQUIERDO         valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
+                        | MODULO PARENTESIS_IZQUIERDO           valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO;
+
+valor_aritmetica  ::= ENTERO | EXPRESION | DECIMAL ;

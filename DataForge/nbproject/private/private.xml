@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/USAC/5%20Quinto%20Semestre/Compiladores%201%20Laboratorio/PROYECTO%201/DataForge/src/AnalizadoresLexicoSintactico/sintactico.cup</file>
+            <file>file:/D:/USAC/5%20Quinto%20Semestre/Compiladores%201%20Laboratorio/PROYECTO%201/DataForge/src/AnalizadoresLexicoSintactico/Parser.java</file>
+            <file>file:/D:/USAC/5%20Quinto%20Semestre/Compiladores%201%20Laboratorio/PROYECTO%201/DataForge/src/dataforge/Menu_Principal.java</file>
+            <file>file:/D:/USAC/5%20Quinto%20Semestre/Compiladores%201%20Laboratorio/PROYECTO%201/DataForge/src/Instrucciones/Variable.java</file>
+            <file>file:/D:/USAC/5%20Quinto%20Semestre/Compiladores%201%20Laboratorio/PROYECTO%201/DataForge/src/AnalizadoresLexicoSintactico/lexico.jflex</file>
+            <file>file:/D:/USAC/5%20Quinto%20Semestre/Compiladores%201%20Laboratorio/PROYECTO%201/DataForge/src/AnalizadoresLexicoSintactico/Generador.java</file>
+        </group>
     </open-files>
 </project-private>
