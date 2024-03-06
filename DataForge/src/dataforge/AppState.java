@@ -1,6 +1,6 @@
 package dataforge;
 import java.util.LinkedList;
-import Instrucciones.Variable;
+import Instrucciones.SimboloNodo;
 /**
  *
  * @author manuel
@@ -8,5 +8,5 @@ import Instrucciones.Variable;
 public class AppState {
     public static LinkedList<Token> listaToken = new LinkedList<>();
     public static LinkedList<ErrorLexico> listaErrorLexico = new LinkedList<>();
-    public static LinkedList<Variable> listaVariable = new LinkedList<>();
+    public static LinkedList<SimboloNodo> tablaSimbolo = new LinkedList<>();
 }

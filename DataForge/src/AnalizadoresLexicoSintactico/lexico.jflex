@@ -26,20 +26,21 @@ yyline = 1;
 yycolumn = 1;
 %init}
 
-
+//------------------------------------------------------------------------------
 EN_BLANCO = [ \r\t]+
 COMENTARIO_LINEA = ("!".*\r\n)|("!".*\n)|("!".*\r)
+SIMBOLO_EXCLAMAC = [^!]
+COMENTARIO_MULTI = "<!"{SIMBOLO_EXCLAMAC}* "!>"
 
-
+//------------------------------------------------------------------------------
 CADENA = \"([^\"\r\n]*)\"
-//CADENA = [\"][^\"]*[\"]
-EXPRESION = [a-z,A-Z]+
+EXPRESION = [a-zA-Z][a-zA-Z0-9]+
+EXPRESION_ARRAY = \@{EXPRESION}
 ENTERO = [0-9]+
 DECIMAL = {ENTERO}\.{ENTERO} 
 
 //------------------------------------------------------------------------------
 %%
-
 
 "PROGRAM"               {
                     tokens.add(new Token("PROGRAM", yytext(), yyline, yycolumn));
@@ -55,11 +56,11 @@ DECIMAL = {ENTERO}\.{ENTERO}
                     }
 "double"                {
                     tokens.add(new Token("DOUBLE", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.DOUBLE, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_VARIABLE, yyline, yycolumn, yytext());
                     }
-"char"                  {
+"char[]"                  {
                     tokens.add(new Token("CHAR", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.CHAR, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_VARIABLE, yyline, yycolumn, yytext());
                     }
 "end"                   {
                     tokens.add(new Token("END", yytext(), yyline, yycolumn));
@@ -71,43 +72,47 @@ DECIMAL = {ENTERO}\.{ENTERO}
                     }
 "SUM"                   {
                     tokens.add(new Token("SUMA", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.SUMA, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ARITMETICA, yyline, yycolumn, yytext());
                     }
 "RES"                   {
                     tokens.add(new Token("RESTA", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.RESTA, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ARITMETICA, yyline, yycolumn, yytext());
                     }
 "MUL"                   {
                     tokens.add(new Token("MULTIPLICACION", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.MULTIPLICACION, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ARITMETICA, yyline, yycolumn, yytext());
                     }
 "DIV"                   {
                     tokens.add(new Token("DIVISION", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.DIVISION, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ARITMETICA, yyline, yycolumn, yytext());
                     }
 "MOD"                   {
                     tokens.add(new Token("MODULO", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.MODULO, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ARITMETICA, yyline, yycolumn, yytext());
                     }
 "Media"                 {
                     tokens.add(new Token("MEDIA", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.MEDIA, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ESTADISTICA, yyline, yycolumn, yytext());
                     }
 "Mediana"               {
                     tokens.add(new Token("MEDIANA", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.MEDIANA, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ESTADISTICA, yyline, yycolumn, yytext());
 }
 "Moda"                  {
                     tokens.add(new Token("MODA", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.MODA, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ESTADISTICA, yyline, yycolumn, yytext());
+}
+"Varianza"              {
+                    tokens.add(new Token("VARIANZA", yytext(), yyline, yycolumn));
+                    return new Symbol(sym.ESTADISTICA, yyline, yycolumn, yytext());
 }
 "Max"                   {
                     tokens.add(new Token("MAXIMO", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.MAXIMO, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ESTADISTICA, yyline, yycolumn, yytext());
 }
 "Min"                   {
                     tokens.add(new Token("MINIMO", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.MINIMO, yyline, yycolumn, yytext());
+                    return new Symbol(sym.ESTADISTICA, yyline, yycolumn, yytext());
 }
 "console"               {
                     tokens.add(new Token("CONSOLE", yytext(), yyline, yycolumn));
@@ -197,10 +202,6 @@ DECIMAL = {ENTERO}\.{ENTERO}
                     tokens.add(new Token("CORCHETE_DERECHO", yytext(), yyline, yycolumn));
                     return new Symbol(sym.CORCHETE_DERECHO, yyline, yycolumn, yytext());
 }
-"@"                     {
-                    tokens.add(new Token("ARROBA", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.ARROBA, yyline, yycolumn, yytext());
-}
 ","                     {
                     tokens.add(new Token("COMA", yytext(), yyline, yycolumn));
                     return new Symbol(sym.COMA, yyline, yycolumn, yytext());
@@ -224,23 +225,30 @@ DECIMAL = {ENTERO}\.{ENTERO}
 
 {COMENTARIO_LINEA}      {}
 
-{CADENA}                {
+{COMENTARIO_MULTI}      {}
+
+{CADENA}            {
                     tokens.add(new Token("CADENA", yytext(), yyline, yycolumn));
                     return new Symbol(sym.CADENA, yyline, yycolumn, yytext());
 }
-{ENTERO}                {
+
+{ENTERO}            {
                     tokens.add(new Token("ENTERO", yytext(), yyline, yycolumn));
                     return new Symbol(sym.ENTERO, yyline, yycolumn, yytext());
 }
-{DECIMAL}               {
+{DECIMAL}           {
                     tokens.add(new Token("DECIMAL", yytext(), yyline, yycolumn));
                     return new Symbol(sym.DECIMAL, yyline, yycolumn, yytext());
                     }
-
-{EXPRESION}             {
+{EXPRESION}         {
                     tokens.add(new Token("EXPRESION", yytext(), yyline, yycolumn));
                     return new Symbol(sym.EXPRESION, yyline, yycolumn, yytext());
-                    }
+}
+{EXPRESION_ARRAY}         {
+                    tokens.add(new Token("EXPRESION ARRAY", yytext(), yyline, yycolumn));
+                    return new Symbol(sym.EXPRESION_ARRAY, yyline, yycolumn, yytext());
+}
+
 
 . {
 lexicalErrors.add(new ErrorLexico("Lexico", yytext(), yyline, yycolumn));

@@ -8,62 +8,53 @@ package AnalizadoresLexicoSintactico;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int PARENTESIS_DERECHO = 16;
-  public static final int PARENTESIS_IZQUIERDO = 15;
-  public static final int CHAR = 4;
-  public static final int ENTERO = 32;
-  public static final int GRAPHPIE = 28;
-  public static final int DOUBLE = 3;
-  public static final int RESTA = 18;
-  public static final int DOS_PUNTOS = 7;
-  public static final int ARRAY = 37;
-  public static final int GRAPHBAR = 27;
-  public static final int TITULOY = 49;
-  public static final int CORCHETE_DERECHO = 14;
-  public static final int TITULOX = 48;
-  public static final int END_PROGRAM = 36;
-  public static final int EJEY = 44;
-  public static final int EJEX = 43;
-  public static final int IGUAL = 10;
-  public static final int COLUMN = 24;
-  public static final int MINIMO = 40;
-  public static final int ARROBA = 12;
-  public static final int TITULO = 46;
-  public static final int SUMA = 19;
-  public static final int CORCHETE_IZQUIERDO = 13;
-  public static final int PUNTO_COMA = 9;
-  public static final int MEDIANA = 26;
+  public static final int PARENTESIS_DERECHO = 15;
+  public static final int PARENTESIS_IZQUIERDO = 14;
+  public static final int ENTERO = 26;
+  public static final int GRAPHPIE = 22;
+  public static final int DOS_PUNTOS = 6;
+  public static final int ARRAY = 30;
+  public static final int GRAPHBAR = 21;
+  public static final int TITULOY = 41;
+  public static final int CORCHETE_DERECHO = 13;
+  public static final int TITULOX = 40;
+  public static final int END_PROGRAM = 32;
+  public static final int EJEY = 36;
+  public static final int EJEX = 35;
+  public static final int IGUAL = 9;
+  public static final int COLUMN = 19;
+  public static final int ARROBA = 11;
+  public static final int TITULO = 38;
+  public static final int CORCHETE_IZQUIERDO = 12;
+  public static final int PUNTO_COMA = 8;
   public static final int EOF = 0;
-  public static final int DECIMAL = 33;
-  public static final int PROGRAM = 35;
+  public static final int DECIMAL = 27;
   public static final int error = 1;
-  public static final int COMA = 17;
-  public static final int CADENA = 31;
-  public static final int VALUES = 47;
-  public static final int MODULO = 41;
-  public static final int MENOS = 6;
-  public static final int MODA = 21;
-  public static final int MAYOR_QUE = 11;
-  public static final int MAXIMO = 39;
-  public static final int END = 5;
-  public static final int MEDIA = 22;
-  public static final int MENOR_QUE = 8;
-  public static final int EXEC = 20;
-  public static final int LABEL = 45;
-  public static final int DIVISION = 38;
-  public static final int EXPRESION = 34;
+  public static final int PROGRAM = 31;
+  public static final int COMA = 16;
+  public static final int CADENA = 25;
+  public static final int VALUES = 39;
+  public static final int MENOS = 5;
+  public static final int MAYOR_QUE = 10;
+  public static final int ARITMETICA = 33;
+  public static final int EXPRESION_ARRAY = 29;
+  public static final int TIPO_VARIABLE = 3;
+  public static final int ESTADISTICA = 34;
+  public static final int END = 4;
+  public static final int MENOR_QUE = 7;
+  public static final int EXEC = 17;
+  public static final int LABEL = 37;
+  public static final int EXPRESION = 28;
   public static final int VAR = 2;
-  public static final int GRAPHLINE = 29;
-  public static final int HISTOGRAM = 30;
-  public static final int PRINT = 23;
-  public static final int CONSOLE = 25;
-  public static final int MULTIPLICACION = 42;
+  public static final int GRAPHLINE = 23;
+  public static final int HISTOGRAM = 24;
+  public static final int PRINT = 18;
+  public static final int CONSOLE = 20;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "VAR",
-  "DOUBLE",
-  "CHAR",
+  "TIPO_VARIABLE",
   "END",
   "MENOS",
   "DOS_PUNTOS",
@@ -77,15 +68,10 @@ public class sym {
   "PARENTESIS_IZQUIERDO",
   "PARENTESIS_DERECHO",
   "COMA",
-  "RESTA",
-  "SUMA",
   "EXEC",
-  "MODA",
-  "MEDIA",
   "PRINT",
   "COLUMN",
   "CONSOLE",
-  "MEDIANA",
   "GRAPHBAR",
   "GRAPHPIE",
   "GRAPHLINE",
@@ -94,14 +80,12 @@ public class sym {
   "ENTERO",
   "DECIMAL",
   "EXPRESION",
+  "EXPRESION_ARRAY",
+  "ARRAY",
   "PROGRAM",
   "END_PROGRAM",
-  "ARRAY",
-  "DIVISION",
-  "MAXIMO",
-  "MINIMO",
-  "MODULO",
-  "MULTIPLICACION",
+  "ARITMETICA",
+  "ESTADISTICA",
   "EJEX",
   "EJEY",
   "LABEL",

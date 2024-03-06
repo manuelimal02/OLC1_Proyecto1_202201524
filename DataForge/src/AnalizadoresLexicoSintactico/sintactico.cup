@@ -1,5 +1,6 @@
 package AnalizadoresLexicoSintactico;
 import java_cup.runtime.*;
+import Instrucciones.ArbolSintactico;
 
 parser code 
 {:
@@ -12,55 +13,129 @@ parser code
         }
 :}
 
-terminal String VAR, DOUBLE, CHAR, END;
+terminal VAR, TIPO_VARIABLE, END;
 
-terminal String MENOS, DOS_PUNTOS, MENOR_QUE, PUNTO_COMA, IGUAL, MAYOR_QUE, ARROBA, CORCHETE_IZQUIERDO, CORCHETE_DERECHO;
-terminal String PARENTESIS_IZQUIERDO, PARENTESIS_DERECHO, COMA;
+terminal MENOS, DOS_PUNTOS, MENOR_QUE, PUNTO_COMA, IGUAL, MAYOR_QUE, ARROBA, CORCHETE_IZQUIERDO, CORCHETE_DERECHO;
+terminal PARENTESIS_IZQUIERDO, PARENTESIS_DERECHO, COMA;
 
-terminal String RESTA, SUMA, EXEC, MODA, MEDIA, PRINT, COLUMN, CONSOLE, MEDIANA, GRAPHBAR, GRAPHPIE, GRAPHLINE, HISTOGRAM;
-terminal String CADENA, ENTERO, DECIMAL , EXPRESION, PROGRAM, END_PROGRAM, ARRAY, DIVISION, MAXIMO, MINIMO, MODULO, MULTIPLICACION;
-terminal String EJEX, EJEY, LABEL, TITULO, VALUES, TITULOX, TITULOY;
-
-//------------------------------------------------------------------------------
-non terminal programa, declaraciones, declaracion, tipo;
-
-non terminal asignacion_variable, valor_variable;
-
-non terminal asignacion_arreglo, valor_arreglo, contenido_array;
-
-non terminal asignacion_aritmetica, valor_aritmetica, operacion_aritmetica;
-//------------------------------------------------------------------------------
-start with programa;
-
-programa ::= PROGRAM declaraciones END_PROGRAM;
-
-declaraciones ::= declaracion | declaracion declaraciones;
+terminal EXEC, PRINT, COLUMN, CONSOLE, GRAPHBAR, GRAPHPIE, GRAPHLINE, HISTOGRAM;
+terminal CADENA, ENTERO, DECIMAL , EXPRESION, EXPRESION_ARRAY, ARRAY, PROGRAM, END_PROGRAM, ARITMETICA, ESTADISTICA;
+terminal EJEX, EJEY, LABEL, TITULO, VALUES, TITULOX, TITULOY;
 
 //------------------------------------------------------------------------------
-declaracion ::= VAR DOS_PUNTOS tipo DOS_PUNTOS DOS_PUNTOS EXPRESION asignacion_variable END PUNTO_COMA;
+non terminal ArbolSintactico inicio, declaraciones, declaracion;
 
-tipo ::= CHAR CORCHETE_IZQUIERDO CORCHETE_DERECHO |DOUBLE;
+non terminal ArbolSintactico asignacion_variable, valor_variable;
 
-asignacion_variable ::= MENOR_QUE MENOS valor_variable;
-
-valor_variable ::= ENTERO | DECIMAL | CADENA |EXPRESION;
+non terminal ArbolSintactico asignacion_arreglo, valor_array, lista_array;
 
 //------------------------------------------------------------------------------
-declaracion ::= ARRAY DOS_PUNTOS tipo DOS_PUNTOS DOS_PUNTOS ARROBA EXPRESION asignacion_arreglo END PUNTO_COMA;
+start with inicio;
 
-asignacion_arreglo ::= MENOR_QUE MENOS CORCHETE_IZQUIERDO contenido_array CORCHETE_DERECHO;
+inicio ::= PROGRAM:program declaraciones:sentencias END_PROGRAM:end_program
 
-contenido_array ::= valor_variable contenido_array | COMA valor_variable contenido_array | /* ε */;
+{:
+    ArbolSintactico inicio = new ArbolSintactico("Inicio");
+    inicio.AgregarHijo(new ArbolSintactico(program.toString()));
+    inicio.AgregarHijo(sentencias);
+    inicio.AgregarHijo(new ArbolSintactico(end_program.toString()));
+    RESULT = inicio;   
+:};
+
+declaraciones ::= declaraciones:sentencias declaracion:sentencia 
+{:
+    ArbolSintactico declaraciones = new ArbolSintactico("Declaracion");
+    declaraciones.AgregarHijo(sentencias);
+    declaraciones.AgregarHijo(sentencia);
+    RESULT = declaraciones;
+    
+:}
+                | declaracion:sentencia 
+
+{:
+    ArbolSintactico declaraciones = new ArbolSintactico("Declaracion");
+    declaraciones.AgregarHijo(sentencia);
+    RESULT = declaraciones;
+    
+:};
 
 //------------------------------------------------------------------------------
-declaracion ::= VAR DOS_PUNTOS tipo DOS_PUNTOS DOS_PUNTOS EXPRESION asignacion_aritmetica END PUNTO_COMA;
+valor_variable ::=    ENTERO:valor1
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
+    RESULT = valor;
+:}
+                    | DECIMAL:valor1  
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
+    RESULT = valor;
+:}
+                    | CADENA:valor1 
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
+    RESULT = valor;
+:}
+                    | EXPRESION:valor1
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
+    RESULT = valor;
+:}
+;
+//------------------------------------------------------------------------------
+declaracion ::= VAR:var DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_PUNTOS:dos_puntos2 DOS_PUNTOS:dos_puntos3 EXPRESION:expresion MENOR_QUE:menor_que MENOS:menos valor_variable:valor END:end PUNTO_COMA:punto_coma
+{:
+    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Variable");
+    declaracion.AgregarHijo(new ArbolSintactico(var.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(tipo_variable.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(dos_puntos3.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(expresion.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(menor_que.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(menos.toString()));
+    declaracion.AgregarHijo(valor);
+    declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
+    RESULT = declaracion; 
+:};
 
-asignacion_aritmetica ::= MENOR_QUE MENOS operacion_aritmetica;
+//------------------------------------------------------------------------------
+declaracion ::= ARRAY:array DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_PUNTOS:dos_puntos2 DOS_PUNTOS:dos_puntos3 EXPRESION_ARRAY:expresion_array MENOR_QUE:menor_que MENOS:menos CORCHETE_IZQUIERDO:corchete_izquierdo lista_array:lista CORCHETE_DERECHO:corchete_derecho END:end PUNTO_COMA:punto_coma
+{:
+    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Arreglo");
+    declaracion.AgregarHijo(new ArbolSintactico(array.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(tipo_variable.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(dos_puntos3.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(expresion_array.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(menor_que.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(menos.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(corchete_izquierdo.toString()));
+    declaracion.AgregarHijo(lista);
+    declaracion.AgregarHijo(new ArbolSintactico(corchete_derecho.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
+    RESULT = declaracion;
+:}
+;
 
-operacion_aritmetica ::= SUMA PARENTESIS_IZQUIERDO              valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
-                        | RESTA PARENTESIS_IZQUIERDO            valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
-                        | MULTIPLICACION PARENTESIS_IZQUIERDO   valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
-                        | DIVISION PARENTESIS_IZQUIERDO         valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO
-                        | MODULO PARENTESIS_IZQUIERDO           valor_aritmetica COMA valor_aritmetica PARENTESIS_DERECHO;
-
-valor_aritmetica  ::= ENTERO | EXPRESION | DECIMAL ;
+lista_array ::= lista_array:lista COMA:coma valor_variable:valor_var 
+{:
+    ArbolSintactico lista_array = new ArbolSintactico("Lista Array");
+    lista_array.AgregarHijo(lista);
+    lista_array.AgregarHijo(new ArbolSintactico(coma.toString()));
+    lista_array.AgregarHijo(valor_var);
+    RESULT = lista_array;
+:}
+        | valor_variable:valor1
+{:
+    ArbolSintactico valor = new ArbolSintactico("Lista Array");
+    valor.AgregarHijo(valor1);
+    RESULT = valor;   
+:}
+;

@@ -216,7 +216,7 @@ public class Menu_Principal extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,25 +339,29 @@ public class Menu_Principal extends javax.swing.JFrame {
             String contenido = textArea.getText();
             Lexico analizador_lexico = new Lexico(new BufferedReader(new StringReader(contenido)));
             Parser analizador_sintactico = new Parser(analizador_lexico);
-            analizador_sintactico.parse(); 
+             
+            ArbolSintactico Raiz = (ArbolSintactico)analizador_sintactico.parse().value;
             
-            System.out.println("-------");
-            System.out.println(analizador_lexico.lexicalErrors.size());
-            System.out.println("-------");
-            System.out.println(analizador_lexico.tokens.size());
-            System.out.println("-------");
+            Raiz.EjecutarInterprete(Raiz, jTextArea1,AppState.tablaSimbolo);
+            System.out.println("----------------------------------------------");
+            Raiz.ImprimirArbol(Raiz);
+            System.out.println("----------------------------------------------");
+            //System.out.println("-------");
+            //System.out.println(analizador_lexico.lexicalErrors.size());
+            //System.out.println("-------");
+            //System.out.println(analizador_lexico.tokens.size());
+            //System.out.println("-------");
             
             AppState.listaToken.addAll(analizador_lexico.tokens);
             AppState.listaErrorLexico.addAll(analizador_lexico.lexicalErrors);
-            //AppState.listaVariable.addAll(analizador_sintactico.variables);
             
+            for (SimboloNodo Simbolo : AppState.tablaSimbolo) {
+                System.out.println("Nombre: " + Simbolo.getNombre() +" -- Tipo: "+ Simbolo.getTipo()+" -- Valor: "+Simbolo.getValor()+" -- Rol: "+Simbolo.getRol());
+            } 
+            System.out.println("----------------------------------------------");
             for (Token token : AppState.listaToken) {
-                System.out.println("Lexema: " + token.getLexema() +" -- "+ token.getTipo());
-            }
-            System.out.println("----------------------------");
-            for (Variable variable : AppState.listaVariable) {
-                System.out.println("Nombre: " + variable.getID() +" -- "+ "Valor: " +variable.getValor());
-            }         
+                System.out.println("Lexema: " + token.getLexema() +" -- Token: "+ token.getTipo());
+            }       
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
