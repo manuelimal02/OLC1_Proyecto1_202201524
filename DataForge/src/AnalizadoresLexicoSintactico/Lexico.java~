@@ -1071,7 +1071,7 @@ yycolumn = 1;
           case 87: break;
           case 36:
             { tokens.add(new Token("PRINT", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.PRINT, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
             }
           // fall through
           case 88: break;
@@ -1083,7 +1083,7 @@ yycolumn = 1;
           case 89: break;
           case 38:
             { tokens.add(new Token("COLUMN", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.COLUMN, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
             }
           // fall through
           case 90: break;

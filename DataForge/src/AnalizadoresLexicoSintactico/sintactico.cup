@@ -18,16 +18,14 @@ terminal VAR, TIPO_VARIABLE, END;
 terminal MENOS, DOS_PUNTOS, MENOR_QUE, PUNTO_COMA, IGUAL, MAYOR_QUE, ARROBA, CORCHETE_IZQUIERDO, CORCHETE_DERECHO;
 terminal PARENTESIS_IZQUIERDO, PARENTESIS_DERECHO, COMA;
 
-terminal EXEC, PRINT, COLUMN, CONSOLE, GRAPHBAR, GRAPHPIE, GRAPHLINE, HISTOGRAM;
+terminal EXEC, TIPO_PRINT, CONSOLE, GRAPHBAR, GRAPHPIE, GRAPHLINE, HISTOGRAM;
 terminal CADENA, ENTERO, DECIMAL , EXPRESION, EXPRESION_ARRAY, ARRAY, PROGRAM, END_PROGRAM, ARITMETICA, ESTADISTICA;
 terminal EJEX, EJEY, LABEL, TITULO, VALUES, TITULOX, TITULOY;
 
 //------------------------------------------------------------------------------
 non terminal ArbolSintactico inicio, declaraciones, declaracion;
 
-non terminal ArbolSintactico asignacion_variable, valor_variable;
-
-non terminal ArbolSintactico asignacion_arreglo, valor_array, lista_array;
+non terminal ArbolSintactico Valores, valor_variable, contenido_array, lista_array;
 
 //------------------------------------------------------------------------------
 start with inicio;
@@ -84,6 +82,45 @@ valor_variable ::=    ENTERO:valor1
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 :}
+
+                   | EXPRESION_ARRAY:valor1
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
+    RESULT = valor;
+:}
+
+                    | ARITMETICA:aritmetica PARENTESIS_IZQUIERDO:parentesis_izquierdo valor_variable:valor1 COMA:coma valor_variable:valor2 PARENTESIS_DERECHO:parentesis_derecho
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(aritmetica.toString()));
+    valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
+    valor.AgregarHijo(valor1);
+    valor.AgregarHijo(new ArbolSintactico(coma.toString()));
+    valor.AgregarHijo(valor2);
+    valor.AgregarHijo(new ArbolSintactico(parentesis_derecho.toString()));
+    RESULT = valor;
+:}
+
+                    | ESTADISTICA:estadistica PARENTESIS_IZQUIERDO:parentesis_izquierdo contenido_array:contenido PARENTESIS_DERECHO:parentesis_derecho
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
+    valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
+    valor.AgregarHijo(contenido);
+    valor.AgregarHijo(new ArbolSintactico(parentesis_derecho.toString()));
+    RESULT = valor;
+:}
+
+
+                   | ESTADISTICA:estadistica PARENTESIS_IZQUIERDO:parentesis_izquierdo valor_variable:valor2 PARENTESIS_DERECHO:parentesis_derecho
+{:
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
+    valor.AgregarHijo(valor2);
+    RESULT = valor;
+:}
+
 ;
 //------------------------------------------------------------------------------
 declaracion ::= VAR:var DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_PUNTOS:dos_puntos2 DOS_PUNTOS:dos_puntos3 EXPRESION:expresion MENOR_QUE:menor_que MENOS:menos valor_variable:valor END:end PUNTO_COMA:punto_coma
@@ -104,7 +141,7 @@ declaracion ::= VAR:var DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_P
 :};
 
 //------------------------------------------------------------------------------
-declaracion ::= ARRAY:array DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_PUNTOS:dos_puntos2 DOS_PUNTOS:dos_puntos3 EXPRESION_ARRAY:expresion_array MENOR_QUE:menor_que MENOS:menos CORCHETE_IZQUIERDO:corchete_izquierdo lista_array:lista CORCHETE_DERECHO:corchete_derecho END:end PUNTO_COMA:punto_coma
+declaracion ::= ARRAY:array DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_PUNTOS:dos_puntos2 DOS_PUNTOS:dos_puntos3 EXPRESION_ARRAY:expresion_array MENOR_QUE:menor_que MENOS:menos contenido_array:contenido END:end PUNTO_COMA:punto_coma
 {:
     ArbolSintactico declaracion = new ArbolSintactico("Declaracion Arreglo");
     declaracion.AgregarHijo(new ArbolSintactico(array.toString()));
@@ -115,14 +152,22 @@ declaracion ::= ARRAY:array DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable D
     declaracion.AgregarHijo(new ArbolSintactico(expresion_array.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(menor_que.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(menos.toString()));
-    declaracion.AgregarHijo(new ArbolSintactico(corchete_izquierdo.toString()));
-    declaracion.AgregarHijo(lista);
-    declaracion.AgregarHijo(new ArbolSintactico(corchete_derecho.toString()));
+    declaracion.AgregarHijo(contenido);
     declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
     RESULT = declaracion;
 :}
 ;
+
+contenido_array ::= CORCHETE_IZQUIERDO:corchete_izquierdo lista_array:lista CORCHETE_DERECHO:corchete_derecho
+{:
+    ArbolSintactico contenido_array = new ArbolSintactico("Contenido Array");
+    contenido_array.AgregarHijo(new ArbolSintactico(corchete_izquierdo.toString()));
+    contenido_array.AgregarHijo(lista);
+    contenido_array.AgregarHijo(new ArbolSintactico(corchete_derecho.toString()));
+    RESULT = contenido_array;
+    
+:};
 
 lista_array ::= lista_array:lista COMA:coma valor_variable:valor_var 
 {:
@@ -139,3 +184,6 @@ lista_array ::= lista_array:lista COMA:coma valor_variable:valor_var
     RESULT = valor;   
 :}
 ;
+
+//------------------------------------------------------------------------------
+

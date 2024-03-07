@@ -120,11 +120,11 @@ DECIMAL = {ENTERO}\.{ENTERO}
 }
 "print"                 {
                     tokens.add(new Token("PRINT", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.PRINT, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
 }
 "column"                {
                     tokens.add(new Token("COLUMN", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.COLUMN, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
 }
 "EXEC"                  {
                     tokens.add(new Token("EXEC", yytext(), yyline, yycolumn));

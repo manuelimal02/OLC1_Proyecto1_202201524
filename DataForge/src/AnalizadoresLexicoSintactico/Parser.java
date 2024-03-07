@@ -32,10 +32,12 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\014\000\002\002\004\000\002\002\005\000\002\003" +
+    "\000\021\000\002\002\004\000\002\002\005\000\002\003" +
     "\004\000\002\003\003\000\002\006\003\000\002\006\003" +
-    "\000\002\006\003\000\002\006\003\000\002\004\015\000" +
-    "\002\004\017\000\002\011\005\000\002\011\003" });
+    "\000\002\006\003\000\002\006\003\000\002\006\003\000" +
+    "\002\006\010\000\002\006\006\000\002\006\006\000\002" +
+    "\004\015\000\002\004\015\000\002\007\005\000\002\010" +
+    "\005\000\002\010\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -43,29 +45,43 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\047\000\004\041\005\001\002\000\004\002\051\001" +
-    "\002\000\006\004\007\040\011\001\002\000\010\004\007" +
-    "\040\011\042\047\001\002\000\004\010\035\001\002\000" +
-    "\010\004\ufffe\040\ufffe\042\ufffe\001\002\000\004\010\012" +
+    "\000\065\000\004\040\005\001\002\000\004\002\067\001" +
+    "\002\000\006\004\006\037\011\001\002\000\004\010\055" +
+    "\001\002\000\010\004\006\037\011\041\053\001\002\000" +
+    "\010\004\ufffe\037\ufffe\041\ufffe\001\002\000\004\010\012" +
     "\001\002\000\004\005\013\001\002\000\004\010\014\001" +
-    "\002\000\004\010\015\001\002\000\004\037\016\001\002" +
+    "\002\000\004\010\015\001\002\000\004\036\016\001\002" +
     "\000\004\011\017\001\002\000\004\007\020\001\002\000" +
-    "\004\016\021\001\002\000\012\033\026\034\027\035\025" +
-    "\036\023\001\002\000\006\017\ufff6\022\ufff6\001\002\000" +
-    "\010\006\ufffa\017\ufffa\022\ufffa\001\002\000\006\017\031" +
-    "\022\030\001\002\000\010\006\ufffc\017\ufffc\022\ufffc\001" +
-    "\002\000\010\006\ufffb\017\ufffb\022\ufffb\001\002\000\010" +
-    "\006\ufffd\017\ufffd\022\ufffd\001\002\000\012\033\026\034" +
-    "\027\035\025\036\023\001\002\000\004\006\032\001\002" +
-    "\000\004\012\033\001\002\000\010\004\ufff8\040\ufff8\042" +
-    "\ufff8\001\002\000\006\017\ufff7\022\ufff7\001\002\000\004" +
-    "\005\036\001\002\000\004\010\037\001\002\000\004\010" +
-    "\040\001\002\000\004\036\041\001\002\000\004\011\042" +
-    "\001\002\000\004\007\043\001\002\000\012\033\026\034" +
-    "\027\035\025\036\023\001\002\000\004\006\045\001\002" +
-    "\000\004\012\046\001\002\000\010\004\ufff9\040\ufff9\042" +
-    "\ufff9\001\002\000\004\002\000\001\002\000\010\004\uffff" +
-    "\040\uffff\042\uffff\001\002\000\004\002\001\001\002" });
+    "\004\016\022\001\002\000\004\006\051\001\002\000\020" +
+    "\032\023\033\030\034\024\035\033\036\027\042\026\043" +
+    "\031\001\002\000\012\006\ufffb\017\ufffb\021\ufffb\022\ufffb" +
+    "\001\002\000\012\006\ufffc\017\ufffc\021\ufffc\022\ufffc\001" +
+    "\002\000\006\017\047\022\046\001\002\000\004\020\041" +
+    "\001\002\000\012\006\ufff9\017\ufff9\021\ufff9\022\ufff9\001" +
+    "\002\000\012\006\ufffd\017\ufffd\021\ufffd\022\ufffd\001\002" +
+    "\000\004\020\034\001\002\000\006\017\ufff1\022\ufff1\001" +
+    "\002\000\012\006\ufffa\017\ufffa\021\ufffa\022\ufffa\001\002" +
+    "\000\022\016\022\032\023\033\030\034\024\035\033\036" +
+    "\027\042\026\043\031\001\002\000\004\021\040\001\002" +
+    "\000\004\021\037\001\002\000\012\006\ufff7\017\ufff7\021" +
+    "\ufff7\022\ufff7\001\002\000\012\006\ufff6\017\ufff6\021\ufff6" +
+    "\022\ufff6\001\002\000\020\032\023\033\030\034\024\035" +
+    "\033\036\027\042\026\043\031\001\002\000\004\022\043" +
+    "\001\002\000\020\032\023\033\030\034\024\035\033\036" +
+    "\027\042\026\043\031\001\002\000\004\021\045\001\002" +
+    "\000\012\006\ufff8\017\ufff8\021\ufff8\022\ufff8\001\002\000" +
+    "\020\032\023\033\030\034\024\035\033\036\027\042\026" +
+    "\043\031\001\002\000\006\006\ufff3\021\ufff3\001\002\000" +
+    "\006\017\ufff2\022\ufff2\001\002\000\004\012\052\001\002" +
+    "\000\010\004\ufff4\037\ufff4\041\ufff4\001\002\000\004\002" +
+    "\000\001\002\000\010\004\uffff\037\uffff\041\uffff\001\002" +
+    "\000\004\005\056\001\002\000\004\010\057\001\002\000" +
+    "\004\010\060\001\002\000\004\035\061\001\002\000\004" +
+    "\011\062\001\002\000\004\007\063\001\002\000\020\032" +
+    "\023\033\030\034\024\035\033\036\027\042\026\043\031" +
+    "\001\002\000\004\006\065\001\002\000\004\012\066\001" +
+    "\002\000\010\004\ufff5\037\ufff5\041\ufff5\001\002\000\004" +
+    "\002\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -73,20 +89,25 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\047\000\004\002\003\001\001\000\002\001\001\000" +
-    "\006\003\005\004\007\001\001\000\004\004\047\001\001" +
+    "\000\065\000\004\002\003\001\001\000\002\001\001\000" +
+    "\006\003\006\004\007\001\001\000\002\001\001\000\004" +
+    "\004\053\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\007" +
+    "\020\001\001\000\002\001\001\000\006\006\031\010\024" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\006\006\034\007\035\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\006" +
+    "\041\001\001\000\002\001\001\000\004\006\043\001\001" +
+    "\000\002\001\001\000\002\001\001\000\004\006\047\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\006\006\021\011\023\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\006\033\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\006\043\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001" });
+    "\001\001\000\002\001\001\000\002\001\001\000\004\006" +
+    "\063\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -299,7 +320,113 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // declaracion ::= VAR DOS_PUNTOS TIPO_VARIABLE DOS_PUNTOS DOS_PUNTOS EXPRESION MENOR_QUE MENOS valor_variable END PUNTO_COMA 
+          case 8: // valor_variable ::= EXPRESION_ARRAY 
+            {
+              ArbolSintactico RESULT =null;
+		int valor1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object valor1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
+    RESULT = valor;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor_variable",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // valor_variable ::= ARITMETICA PARENTESIS_IZQUIERDO valor_variable COMA valor_variable PARENTESIS_DERECHO 
+            {
+              ArbolSintactico RESULT =null;
+		int aritmeticaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
+		int aritmeticaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
+		Object aritmetica = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
+		int parentesis_izquierdoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int parentesis_izquierdoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object parentesis_izquierdo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int valor1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		ArbolSintactico valor1 = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		int comaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int valor2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int valor2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		ArbolSintactico valor2 = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int parentesis_derecholeft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int parentesis_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object parentesis_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(aritmetica.toString()));
+    valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
+    valor.AgregarHijo(valor1);
+    valor.AgregarHijo(new ArbolSintactico(coma.toString()));
+    valor.AgregarHijo(valor2);
+    valor.AgregarHijo(new ArbolSintactico(parentesis_derecho.toString()));
+    RESULT = valor;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor_variable",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // valor_variable ::= ESTADISTICA PARENTESIS_IZQUIERDO contenido_array PARENTESIS_DERECHO 
+            {
+              ArbolSintactico RESULT =null;
+		int estadisticaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int estadisticaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		Object estadistica = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		int parentesis_izquierdoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int parentesis_izquierdoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object parentesis_izquierdo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int contenidoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int contenidoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		ArbolSintactico contenido = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int parentesis_derecholeft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int parentesis_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object parentesis_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
+    valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
+    valor.AgregarHijo(contenido);
+    valor.AgregarHijo(new ArbolSintactico(parentesis_derecho.toString()));
+    RESULT = valor;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor_variable",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // valor_variable ::= ESTADISTICA PARENTESIS_IZQUIERDO valor_variable PARENTESIS_DERECHO 
+            {
+              ArbolSintactico RESULT =null;
+		int estadisticaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int estadisticaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		Object estadistica = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		int parentesis_izquierdoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int parentesis_izquierdoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object parentesis_izquierdo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int valor2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int valor2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		ArbolSintactico valor2 = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int parentesis_derecholeft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int parentesis_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object parentesis_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
+    valor.AgregarHijo(valor2);
+    RESULT = valor;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("valor_variable",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 12: // declaracion ::= VAR DOS_PUNTOS TIPO_VARIABLE DOS_PUNTOS DOS_PUNTOS EXPRESION MENOR_QUE MENOS valor_variable END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int varleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).left;
@@ -355,42 +482,36 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // declaracion ::= ARRAY DOS_PUNTOS TIPO_VARIABLE DOS_PUNTOS DOS_PUNTOS EXPRESION_ARRAY MENOR_QUE MENOS CORCHETE_IZQUIERDO lista_array CORCHETE_DERECHO END PUNTO_COMA 
+          case 13: // declaracion ::= ARRAY DOS_PUNTOS TIPO_VARIABLE DOS_PUNTOS DOS_PUNTOS EXPRESION_ARRAY MENOR_QUE MENOS contenido_array END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
-		int arrayleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-12)).left;
-		int arrayright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-12)).right;
-		Object array = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-12)).value;
-		int dos_puntos1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)).left;
-		int dos_puntos1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-11)).right;
-		Object dos_puntos1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-11)).value;
-		int tipo_variableleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).left;
-		int tipo_variableright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).right;
-		Object tipo_variable = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-10)).value;
-		int dos_puntos2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).left;
-		int dos_puntos2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).right;
-		Object dos_puntos2 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-9)).value;
-		int dos_puntos3left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).left;
-		int dos_puntos3right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).right;
-		Object dos_puntos3 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-8)).value;
-		int expresion_arrayleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
-		int expresion_arrayright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).right;
-		Object expresion_array = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-7)).value;
-		int menor_queleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
-		int menor_queright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
-		Object menor_que = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
-		int menosleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
-		int menosright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
-		Object menos = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
-		int corchete_izquierdoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
-		int corchete_izquierdoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
-		Object corchete_izquierdo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
-		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
-		int listaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
-		ArbolSintactico lista = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
-		int corchete_derecholeft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
-		int corchete_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
-		Object corchete_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int arrayleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).left;
+		int arrayright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).right;
+		Object array = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-10)).value;
+		int dos_puntos1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).left;
+		int dos_puntos1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).right;
+		Object dos_puntos1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-9)).value;
+		int tipo_variableleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).left;
+		int tipo_variableright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-8)).right;
+		Object tipo_variable = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-8)).value;
+		int dos_puntos2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
+		int dos_puntos2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).right;
+		Object dos_puntos2 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-7)).value;
+		int dos_puntos3left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
+		int dos_puntos3right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
+		Object dos_puntos3 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
+		int expresion_arrayleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
+		int expresion_arrayright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).right;
+		Object expresion_array = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-5)).value;
+		int menor_queleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).left;
+		int menor_queright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)).right;
+		Object menor_que = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-4)).value;
+		int menosleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int menosright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		Object menos = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		int contenidoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int contenidoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		ArbolSintactico contenido = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
 		int endleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int endright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		Object end = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
@@ -407,19 +528,42 @@ class CUP$Parser$actions {
     declaracion.AgregarHijo(new ArbolSintactico(expresion_array.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(menor_que.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(menos.toString()));
-    declaracion.AgregarHijo(new ArbolSintactico(corchete_izquierdo.toString()));
-    declaracion.AgregarHijo(lista);
-    declaracion.AgregarHijo(new ArbolSintactico(corchete_derecho.toString()));
+    declaracion.AgregarHijo(contenido);
     declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
     RESULT = declaracion;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-12)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // lista_array ::= lista_array COMA valor_variable 
+          case 14: // contenido_array ::= CORCHETE_IZQUIERDO lista_array CORCHETE_DERECHO 
+            {
+              ArbolSintactico RESULT =null;
+		int corchete_izquierdoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int corchete_izquierdoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Object corchete_izquierdo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int listaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		ArbolSintactico lista = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int corchete_derecholeft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int corchete_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object corchete_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		
+    ArbolSintactico contenido_array = new ArbolSintactico("Contenido Array");
+    contenido_array.AgregarHijo(new ArbolSintactico(corchete_izquierdo.toString()));
+    contenido_array.AgregarHijo(lista);
+    contenido_array.AgregarHijo(new ArbolSintactico(corchete_derecho.toString()));
+    RESULT = contenido_array;
+    
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("contenido_array",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // lista_array ::= lista_array COMA valor_variable 
             {
               ArbolSintactico RESULT =null;
 		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
@@ -438,12 +582,12 @@ class CUP$Parser$actions {
     lista_array.AgregarHijo(valor_var);
     RESULT = lista_array;
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_array",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_array",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // lista_array ::= valor_variable 
+          case 16: // lista_array ::= valor_variable 
             {
               ArbolSintactico RESULT =null;
 		int valor1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
@@ -454,7 +598,7 @@ class CUP$Parser$actions {
     valor.AgregarHijo(valor1);
     RESULT = valor;   
 
-              CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_array",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_array",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 

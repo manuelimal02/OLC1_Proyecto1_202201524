@@ -10,46 +10,45 @@ public class sym {
   /* terminals */
   public static final int PARENTESIS_DERECHO = 15;
   public static final int PARENTESIS_IZQUIERDO = 14;
-  public static final int ENTERO = 26;
-  public static final int GRAPHPIE = 22;
+  public static final int ENTERO = 25;
+  public static final int GRAPHPIE = 21;
   public static final int DOS_PUNTOS = 6;
-  public static final int ARRAY = 30;
-  public static final int GRAPHBAR = 21;
-  public static final int TITULOY = 41;
+  public static final int ARRAY = 29;
+  public static final int GRAPHBAR = 20;
+  public static final int TITULOY = 40;
   public static final int CORCHETE_DERECHO = 13;
-  public static final int TITULOX = 40;
-  public static final int END_PROGRAM = 32;
-  public static final int EJEY = 36;
-  public static final int EJEX = 35;
+  public static final int TITULOX = 39;
+  public static final int END_PROGRAM = 31;
+  public static final int EJEY = 35;
+  public static final int EJEX = 34;
   public static final int IGUAL = 9;
-  public static final int COLUMN = 19;
   public static final int ARROBA = 11;
-  public static final int TITULO = 38;
+  public static final int TITULO = 37;
   public static final int CORCHETE_IZQUIERDO = 12;
   public static final int PUNTO_COMA = 8;
   public static final int EOF = 0;
-  public static final int DECIMAL = 27;
+  public static final int DECIMAL = 26;
   public static final int error = 1;
-  public static final int PROGRAM = 31;
+  public static final int PROGRAM = 30;
   public static final int COMA = 16;
-  public static final int CADENA = 25;
-  public static final int VALUES = 39;
+  public static final int CADENA = 24;
+  public static final int VALUES = 38;
   public static final int MENOS = 5;
   public static final int MAYOR_QUE = 10;
-  public static final int ARITMETICA = 33;
-  public static final int EXPRESION_ARRAY = 29;
+  public static final int ARITMETICA = 32;
+  public static final int EXPRESION_ARRAY = 28;
   public static final int TIPO_VARIABLE = 3;
-  public static final int ESTADISTICA = 34;
+  public static final int ESTADISTICA = 33;
   public static final int END = 4;
   public static final int MENOR_QUE = 7;
   public static final int EXEC = 17;
-  public static final int LABEL = 37;
-  public static final int EXPRESION = 28;
+  public static final int LABEL = 36;
+  public static final int EXPRESION = 27;
   public static final int VAR = 2;
-  public static final int GRAPHLINE = 23;
-  public static final int HISTOGRAM = 24;
-  public static final int PRINT = 18;
-  public static final int CONSOLE = 20;
+  public static final int GRAPHLINE = 22;
+  public static final int HISTOGRAM = 23;
+  public static final int CONSOLE = 19;
+  public static final int TIPO_PRINT = 18;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -69,8 +68,7 @@ public class sym {
   "PARENTESIS_DERECHO",
   "COMA",
   "EXEC",
-  "PRINT",
-  "COLUMN",
+  "TIPO_PRINT",
   "CONSOLE",
   "GRAPHBAR",
   "GRAPHPIE",
