@@ -120,11 +120,11 @@ DECIMAL = {ENTERO}\.{ENTERO}
 }
 "print"                 {
                     tokens.add(new Token("PRINT", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
+                    return new Symbol(sym.PRINT, yyline, yycolumn, yytext());
 }
 "column"                {
                     tokens.add(new Token("COLUMN", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
+                    return new Symbol(sym.COLUMN, yyline, yycolumn, yytext());
 }
 "EXEC"                  {
                     tokens.add(new Token("EXEC", yytext(), yyline, yycolumn));
@@ -132,31 +132,31 @@ DECIMAL = {ENTERO}\.{ENTERO}
 }
 "graphBar"              {
                     tokens.add(new Token("GRAPHBAR", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.GRAPHBAR, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
 }
 "titulo"                {
                     tokens.add(new Token("TITULO", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TITULO, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_GRAFICA, yyline, yycolumn, yytext());
 }
 "ejeX"                  {
                     tokens.add(new Token("EJEX", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.EJEX, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
 }
 "ejeY"                  {
                     tokens.add(new Token("EJEY", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.EJEY, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
 }
 "tituloX"               {
                     tokens.add(new Token("TITULOX", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TITULOX, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_GRAFICA, yyline, yycolumn, yytext());
 }
 "tituloY"               {
                     tokens.add(new Token("TITULOY", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TITULOY, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_GRAFICA, yyline, yycolumn, yytext());
 }
 "graphPie"              {
                     tokens.add(new Token("GRAPHPIE", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.GRAPHPIE, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
 }
 "values"                {
                     tokens.add(new Token("VALUES", yytext(), yyline, yycolumn));
@@ -168,11 +168,11 @@ DECIMAL = {ENTERO}\.{ENTERO}
 }
 "graphLine"             {
                     tokens.add(new Token("GRAPHLINE", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.GRAPHLINE, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
 }
 "Histogram"             {
                     tokens.add(new Token("HISTOGRAM", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.HISTOGRAM, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
 }
 ":"                     {
                     tokens.add(new Token("DOS_PUNTOS", yytext(), yyline, yycolumn));

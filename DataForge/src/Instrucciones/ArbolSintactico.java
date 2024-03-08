@@ -165,6 +165,31 @@ public class ArbolSintactico {
         }
         return String.format("%.2f", valorMinimo);
     }
+    public static String imprimirVariable(String cadena) {
+        String[] elementos = cadena.split(",");
+        StringBuilder resultado = new StringBuilder();
+        for (String elemento : elementos) {
+            if (resultado.length() > 0) {
+                resultado.append(", ");
+            }
+            String elementoTrimmed = elemento.trim().replaceAll("^\"|\"$", "");
+            resultado.append(elementoTrimmed);
+        }
+        return resultado.toString();
+    }
+    public static String imprimirArreglo(String titulo, String lista) {
+        StringBuilder resultado = new StringBuilder();
+        titulo = titulo.replaceAll("^\"|\"$", "");
+        resultado.append("-----\n");
+        resultado.append(titulo).append("\n");
+        resultado.append("-----\n");
+        String[] elementos = lista.split(",");
+        for (String elemento : elementos) {
+            String elementoTrimmed = elemento.trim().replaceAll("^\"|\"$", "");
+            resultado.append(elementoTrimmed).append("\n");
+        }
+        return resultado.toString();
+    }
     public void EjecutarInterprete(ArbolSintactico Raiz, JTextArea Consola, LinkedList<SimboloNodo> TablaS){
         for (ArbolSintactico Hijo: Raiz.Hijos){
             EjecutarInterprete(Hijo, Consola, TablaS);
@@ -186,6 +211,18 @@ public class ArbolSintactico {
                     Raiz.getHijos().get(8).Result
             );
             TablaS.add(SimboloNuevo);
+        }
+        else if(Raiz.getElemento()=="Declaracion Imprimir" && Raiz.getHijos().size()==8){
+            String Variable = imprimirVariable(Raiz.getHijos().get(5).Result);
+            Consola.append(Variable+"\n");
+        }
+        else if(Raiz.getElemento()=="Declaracion Imprimir" & Raiz.getHijos().size()==11){
+            String Arreglo = imprimirArreglo(Raiz.getHijos().get(5).Result, Raiz.getHijos().get(8).Result);
+            Consola.append(Arreglo+"\n");
+        }
+        else if(Raiz.getElemento()=="Declaracion Imprimir" & Raiz.getHijos().size()==2){
+            String Arreglo = imprimirArreglo(Raiz.getHijos().get(0).Result, Raiz.getHijos().get(1).Result);
+            Consola.append(Arreglo+"\n");
         }
         else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==1){
             Raiz.Result=Raiz.getHijos().get(0).getElemento();

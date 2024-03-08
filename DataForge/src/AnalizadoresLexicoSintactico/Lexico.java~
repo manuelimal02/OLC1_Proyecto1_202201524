@@ -1035,13 +1035,13 @@ yycolumn = 1;
           case 81: break;
           case 30:
             { tokens.add(new Token("EJEX", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.EJEX, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
             }
           // fall through
           case 82: break;
           case 31:
             { tokens.add(new Token("EJEY", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.EJEY, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
             }
           // fall through
           case 83: break;
@@ -1071,7 +1071,7 @@ yycolumn = 1;
           case 87: break;
           case 36:
             { tokens.add(new Token("PRINT", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
+                    return new Symbol(sym.PRINT, yyline, yycolumn, yytext());
             }
           // fall through
           case 88: break;
@@ -1083,7 +1083,7 @@ yycolumn = 1;
           case 89: break;
           case 38:
             { tokens.add(new Token("COLUMN", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TIPO_PRINT, yyline, yycolumn, yytext());
+                    return new Symbol(sym.COLUMN, yyline, yycolumn, yytext());
             }
           // fall through
           case 90: break;
@@ -1095,7 +1095,7 @@ yycolumn = 1;
           case 91: break;
           case 40:
             { tokens.add(new Token("TITULO", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TITULO, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_GRAFICA, yyline, yycolumn, yytext());
             }
           // fall through
           case 92: break;
@@ -1125,25 +1125,25 @@ yycolumn = 1;
           case 96: break;
           case 45:
             { tokens.add(new Token("TITULOX", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TITULOX, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_GRAFICA, yyline, yycolumn, yytext());
             }
           // fall through
           case 97: break;
           case 46:
             { tokens.add(new Token("TITULOY", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.TITULOY, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_GRAFICA, yyline, yycolumn, yytext());
             }
           // fall through
           case 98: break;
           case 47:
             { tokens.add(new Token("GRAPHBAR", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.GRAPHBAR, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
             }
           // fall through
           case 99: break;
           case 48:
             { tokens.add(new Token("GRAPHPIE", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.GRAPHPIE, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
             }
           // fall through
           case 100: break;
@@ -1155,13 +1155,13 @@ yycolumn = 1;
           case 101: break;
           case 50:
             { tokens.add(new Token("GRAPHLINE", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.GRAPHLINE, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
             }
           // fall through
           case 102: break;
           case 51:
             { tokens.add(new Token("HISTOGRAM", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.HISTOGRAM, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TIPO_GRAFICA, yyline, yycolumn, yytext());
             }
           // fall through
           case 103: break;
