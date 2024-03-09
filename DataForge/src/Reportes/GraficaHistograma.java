@@ -94,25 +94,37 @@ public class GraficaHistograma {
     }
 
     private static String obtenerInformacion(int[] values) {
-        java.util.Map<Integer, Integer> frecuencias = new java.util.HashMap<>();
-        int frecuenciaAcumulada = 0;
-        for (int value : values) {
-            frecuencias.put(value, frecuencias.getOrDefault(value, 0) + 1);
-            frecuenciaAcumulada++;
-        }
-        StringBuilder informacion = new StringBuilder("Información del Histograma:\n");
-        informacion.append("Valor, Frecuencia Acumulada, Relativa Absoluta, Relativa Acumulada\n");
-        for (java.util.Map.Entry<Integer, Integer> entry : frecuencias.entrySet()) {
-            int valor = entry.getKey();
-            int frecuenciaAbsoluta = entry.getValue();
-            double frecuenciaRelativa = (double) frecuenciaAbsoluta / values.length;
-            double frecuenciaAcumuladaRelativa = (double) frecuenciaAcumulada / values.length;
+    // Calcular frecuencia de cada valor
+    java.util.Map<Integer, Integer> frecuencias = new java.util.HashMap<>();
+    int frecuenciaAcumulada = 0;
 
-            informacion.append(String.format("%d, %d, %.2f, %.2f\n", valor, frecuenciaAcumulada,
-                    frecuenciaRelativa, frecuenciaAcumuladaRelativa));
+    StringBuilder informacion = new StringBuilder("Analisis de Arreglo\n");
+    informacion.append("------------------------------\n");
+    informacion.append("Valor - F - Fa - Fr\n");
 
-            frecuenciaAcumulada -= frecuenciaAbsoluta;
-        }
-        return informacion.toString();
+    for (int value : values) {
+        frecuencias.put(value, frecuencias.getOrDefault(value, 0) + 1);
+        frecuenciaAcumulada++;
     }
+
+    int acumuladaTotal = 0;
+    for (java.util.Map.Entry<Integer, Integer> entry : frecuencias.entrySet()) {
+        int valor = entry.getKey();
+        int frecuenciaAbsoluta = entry.getValue();
+        double frecuenciaRelativa = (double) frecuenciaAbsoluta / values.length;
+        double frecuenciaAcumuladaRelativa = (double) frecuenciaAcumulada / values.length;
+
+        informacion.append(String.format("%-6d %-4d %-5d %-5.2f%%\n", valor, frecuenciaAbsoluta,
+                acumuladaTotal + frecuenciaAbsoluta, frecuenciaRelativa * 100));
+
+        acumuladaTotal += frecuenciaAbsoluta;
+    }
+
+    informacion.append("------------------------------\n");
+    informacion.append(String.format("Totales: %-4d %-5d 100%%\n", values.length, acumuladaTotal));
+
+    return informacion.toString();
+}
+
+
 }

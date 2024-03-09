@@ -182,9 +182,9 @@ public class ArbolSintactico {
     public static String imprimirArreglo(String titulo, String lista) {
         StringBuilder resultado = new StringBuilder();
         titulo = titulo.replaceAll("^\"|\"$", "");
-        resultado.append("-----\n");
+        resultado.append("--------\n");
         resultado.append(titulo).append("\n");
-        resultado.append("-----\n");
+        resultado.append("--------\n");
         String[] elementos = lista.split(",");
         for (String elemento : elementos) {
             String elementoTrimmed = elemento.trim().replaceAll("^\"|\"$", "");
