@@ -50,6 +50,7 @@ public class Menu_Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -57,7 +58,6 @@ public class Menu_Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -129,6 +129,8 @@ public class Menu_Principal extends javax.swing.JFrame {
         jTabbedPane1.setBackground(new java.awt.Color(204, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
 
+        jButton1.setText("jButton1");
+
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
         jMenuBar1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
 
@@ -175,17 +177,11 @@ public class Menu_Principal extends javax.swing.JFrame {
 
         jMenu4.setText("EJECUTAR");
         jMenu4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
-
-        jMenuItem10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 10)); // NOI18N
-        jMenuItem10.setText("Ejecutar Análisis");
-        jMenuItem10.setToolTipText("");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
             }
         });
-        jMenu4.add(jMenuItem10);
-
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("REPORTE");
@@ -350,10 +346,39 @@ public class Menu_Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        if (AppState.listaToken.isEmpty()){
+            JOptionPane.showMessageDialog(null, "La Lista Tokens Está Vacía", "Reporte Tokens", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Reporte Creado Correctamente", "Reporte Tokens", JOptionPane.INFORMATION_MESSAGE);
+        ReporteHTML.Generar_Reporte_Tokens(AppState.listaToken, "Reporte_Tokens_202201524.html");
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+        if (AppState.tablaSimbolo.isEmpty()){
+            JOptionPane.showMessageDialog(null, "La Tabla De Simbolos Está Vacía", "Reporte Tabla De Simbolos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Reporte Creado Correctamente", "Reporte Tabla De Simbolos", JOptionPane.INFORMATION_MESSAGE);
+        ReporteHTML.Generar_Tabla_Simbolo(AppState.tablaSimbolo, "Reporte_Tabla_Simbolos_202201524.html");
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        if (AppState.listaErrorLexico.isEmpty()){
+            JOptionPane.showMessageDialog(null, "La Lista De Errores Léxicos Está Vacía", "Reporte Errores Léxicos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Reporte Creado Correctamente", "Reporte Errores Léxicos", JOptionPane.INFORMATION_MESSAGE);
+        ReporteHTML.Generar_Reporte_ErrorLexico(AppState.listaErrorLexico, "Reporte_Errores_Léxicos_202201524.html");
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        // TODO add your handling code here:
         int PestanaSeleccionada = jTabbedPane1.getSelectedIndex();
         if (PestanaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "No Hay Pestañas Abiertas.", "Ejecutar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No Hay Pestañas Abiertas.", "Ejecutar Análisis", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
@@ -361,6 +386,7 @@ public class Menu_Principal extends javax.swing.JFrame {
             AppState.listaErrorLexico.clear();
             AppState.tablaSimbolo.clear();
             jTextArea1.setText("");
+            jTabbedPane2.removeAll();
             int selectedIndex =jTabbedPane1.getSelectedIndex();
             JTextArea textArea = (JTextArea) ((JScrollPane) jTabbedPane1.getComponentAt(selectedIndex)).getViewport().getView();
             String cadena_entrada = textArea.getText();
@@ -378,29 +404,11 @@ public class Menu_Principal extends javax.swing.JFrame {
             for (Token token : AppState.listaToken) {
                 System.out.println("Lexema: " + token.getLexema() +" -- Token: "+ token.getTipo());
             }       
-            
+            JOptionPane.showMessageDialog(null, "Análisis De Archivo Realizado Correctamente ", "Ejecutar Análisis", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
-
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        if (AppState.listaToken.isEmpty()){
-            JOptionPane.showMessageDialog(null, "La Lista Tokens Está Vacía", "Reporte Tokens", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        JOptionPane.showMessageDialog(null, "Reporte Creado Correctamente", "Reporte Tokens", JOptionPane.INFORMATION_MESSAGE);
-        ReporteHTML.Generar_Reporte_Tokens(AppState.listaToken, "Reporte_Tokens_202201524.html");
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
-
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
-
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        JOptionPane.showMessageDialog(null, "Reporte Creado Correctamente", "Reporte Errores Léxicos", JOptionPane.INFORMATION_MESSAGE);
-        ReporteHTML.Generar_Reporte_ErrorLexico(AppState.listaErrorLexico, "Reporte_Errores_Léxicos_202201524.html");
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+            JOptionPane.showMessageDialog(null, "Error: " + e, "Ejecutar Análisis", JOptionPane.ERROR_MESSAGE);
+        }      
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -436,6 +444,7 @@ public class Menu_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -446,7 +455,6 @@ public class Menu_Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;

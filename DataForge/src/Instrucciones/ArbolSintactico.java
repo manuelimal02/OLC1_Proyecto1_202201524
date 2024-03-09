@@ -30,6 +30,46 @@ public class ArbolSintactico {
         return "ERROR SEMANTICO";
     }
     //-----------------------------------------------------------------------------------------------------------------------------------
+    public static String realizarOperacion(String num1, String num2, String operacion) {
+        try {
+            double numero1 = Double.parseDouble(num1);
+            double numero2 = Double.parseDouble(num2);
+            double resultado = 0.0;
+
+            switch (operacion.toUpperCase()) {
+                case "SUM":
+                    resultado = numero1 + numero2;
+                    break;
+                case "RES":
+                    resultado = numero1 - numero2;
+                    break;
+                case "MUL":
+                    resultado = numero1 * numero2;
+                    break;
+                case "DIV":
+                    if (numero2 != 0) {
+                        resultado = numero1 / numero2;
+                    } else {
+                        return "Error: División por cero";
+                    }
+                    break;
+                case "MOD":
+                    if (numero2 != 0) {
+                        resultado = numero1 % numero2;
+                    } else {
+                        return "Error: Módulo por cero";
+                    }
+                    break;
+                default:
+                    return "Error: Operación no válida";
+            }
+            return String.valueOf(resultado);
+
+        } catch (NumberFormatException e) {
+            return "Error: Las cadenas no son números válidos";
+        }
+    }
+    //--------------------------------------------------------------------------
     public static String calcularMedia(String cadena) {
         String[] numerosComoStrings = cadena.split(",");
         double suma = 0;
@@ -229,17 +269,21 @@ public class ArbolSintactico {
         }
         else if(Raiz.getElemento()=="Declaracion Grafica" & Raiz.getHijos().size()==10){
             if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHBAR")){
+                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaBarra.crearGrafica(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHPIE")){
+                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaCircular.crearGraficaCircular(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }
             else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHLINE")){
+                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaLineal.crearGraficaLineas(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }
             else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("HISTOGRAM")){
+                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaHistograma.crearHistograma(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }
@@ -322,25 +366,20 @@ public class ArbolSintactico {
             }      
         }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==6){
              if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("SUM")){
-                Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
-                Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
-                Raiz.Result = String.valueOf(Primero+Segundo);
+                String Resultado=realizarOperacion(Raiz.getHijos().get(2).Result, Raiz.getHijos().get(4).Result, "SUM");
+                Raiz.Result = Resultado;
              }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("RES")){
-                Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
-                Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
-                Raiz.Result = String.valueOf(Primero-Segundo);
+                String Resultado=realizarOperacion(Raiz.getHijos().get(2).Result, Raiz.getHijos().get(4).Result, "RES");
+                Raiz.Result = Resultado;
              }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MUL")){
-                Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
-                Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
-                Raiz.Result = String.valueOf(Primero*Segundo);
+                String Resultado=realizarOperacion(Raiz.getHijos().get(2).Result, Raiz.getHijos().get(4).Result, "MUL");
+                Raiz.Result = Resultado;
              }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("DIV")){
-                Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
-                Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
-                Raiz.Result = String.valueOf(Primero/Segundo);
+                String Resultado=realizarOperacion(Raiz.getHijos().get(2).Result, Raiz.getHijos().get(4).Result, "DIV");
+                Raiz.Result = Resultado;
              }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MOD")){
-                Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
-                Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
-                Raiz.Result = String.valueOf(Primero%Segundo);
+                String Resultado=realizarOperacion(Raiz.getHijos().get(2).Result, Raiz.getHijos().get(4).Result, "MOD");
+                Raiz.Result = Resultado;
              }
         }else if(Raiz.getElemento()=="Lista Array" && Raiz.getHijos().size()==3){
             Raiz.Result=Raiz.getHijos().get(0).Result + Raiz.getHijos().get(1).getElemento()+Raiz.getHijos().get(2).Result; 
