@@ -1059,7 +1059,7 @@ yycolumn = 1;
           case 85: break;
           case 34:
             { tokens.add(new Token("LABEL", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.LABEL, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
             }
           // fall through
           case 86: break;
@@ -1101,7 +1101,7 @@ yycolumn = 1;
           case 92: break;
           case 41:
             { tokens.add(new Token("VALUES", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.VALUES, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
             }
           // fall through
           case 93: break;

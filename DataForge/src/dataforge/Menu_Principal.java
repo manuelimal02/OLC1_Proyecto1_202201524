@@ -3,7 +3,7 @@ package dataforge;
 import AnalizadoresLexicoSintactico.Lexico;
 import AnalizadoresLexicoSintactico.Parser;
 
-import ReporteHTML.ReporteHTML;
+import Reportes.ReporteHTML;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,10 +44,12 @@ public class Menu_Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -85,26 +87,40 @@ public class Menu_Principal extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 255, 255));
         jPanel1.setForeground(new java.awt.Color(204, 255, 255));
 
+        jPanel2.setBackground(new java.awt.Color(153, 255, 255));
+        jPanel2.setForeground(new java.awt.Color(204, 255, 255));
+
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(15, 15, 15)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(15, 15, 15)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
         );
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -213,13 +229,17 @@ public class Menu_Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 316, Short.MAX_VALUE)))
-                .addGap(34, 34, 34))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 1293, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTabbedPane2))
+                            .addComponent(jTabbedPane1))
+                        .addGap(34, 34, 34))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,8 +248,10 @@ public class Menu_Principal extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane2)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
 
@@ -295,6 +317,7 @@ public class Menu_Principal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos DF (*.df)", "df"));
         int PestanaSeleccionada = jTabbedPane1.getSelectedIndex();
         if (PestanaSeleccionada == -1) {
             JOptionPane.showMessageDialog(this, "No Hay Pestañas Abiertas.", "Guardar", JOptionPane.ERROR_MESSAGE);
@@ -337,27 +360,17 @@ public class Menu_Principal extends javax.swing.JFrame {
             AppState.listaToken.clear();
             AppState.listaErrorLexico.clear();
             AppState.tablaSimbolo.clear();
+            jTextArea1.setText("");
             int selectedIndex =jTabbedPane1.getSelectedIndex();
             JTextArea textArea = (JTextArea) ((JScrollPane) jTabbedPane1.getComponentAt(selectedIndex)).getViewport().getView();
-            String contenido = textArea.getText();
-            Lexico analizador_lexico = new Lexico(new BufferedReader(new StringReader(contenido)));
-            Parser analizador_sintactico = new Parser(analizador_lexico);
-             
-            ArbolSintactico Raiz = (ArbolSintactico)analizador_sintactico.parse().value;
-            
-            Raiz.EjecutarInterprete(Raiz, jTextArea1,AppState.tablaSimbolo);
-            System.out.println("----------------------------------------------");
-            //Raiz.ImprimirArbol(Raiz);
-            //System.out.println("----------------------------------------------");
-            //System.out.println("-------");
-            //System.out.println(analizador_lexico.lexicalErrors.size());
-            //System.out.println("-------");
-            //System.out.println(analizador_lexico.tokens.size());
-            //System.out.println("-------");
-            
-            AppState.listaToken.addAll(analizador_lexico.tokens);
-            AppState.listaErrorLexico.addAll(analizador_lexico.lexicalErrors);
-            
+            String cadena_entrada = textArea.getText();
+            Lexico lexico = new Lexico(new BufferedReader(new StringReader(cadena_entrada)));
+            Parser sintactico = new Parser(lexico);
+            ArbolSintactico Raiz = (ArbolSintactico)sintactico.parse().value;
+            Raiz.EjecutarInterprete(Raiz, jTextArea1,AppState.tablaSimbolo, jTabbedPane2);
+            System.out.println("----------------------------------------------"); 
+            AppState.listaToken.addAll(lexico.tokens);
+            AppState.listaErrorLexico.addAll(lexico.lexicalErrors);
             for (SimboloNodo Simbolo : AppState.tablaSimbolo) {
                 System.out.println("Nombre: " + Simbolo.getNombre() +" -- Tipo: "+ Simbolo.getTipo()+" -- Valor: "+Simbolo.getValor()+" -- Rol: "+Simbolo.getRol());
             } 
@@ -446,8 +459,10 @@ public class Menu_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

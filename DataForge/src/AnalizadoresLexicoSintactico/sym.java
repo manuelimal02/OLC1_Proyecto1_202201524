@@ -31,16 +31,14 @@ public class sym {
   public static final int COMA = 15;
   public static final int MENOR_QUE = 7;
   public static final int EOF = 0;
-  public static final int VALUES = 33;
   public static final int END_PROGRAM = 28;
   public static final int PRINT = 17;
   public static final int error = 1;
   public static final int TIPO_GRAFICA = 20;
   public static final int PUNTO_COMA = 8;
   public static final int ENTERO = 22;
-  public static final int TITULO_GRAFICA = 34;
+  public static final int TITULO_GRAFICA = 32;
   public static final int ARRAY = 26;
-  public static final int LABEL = 32;
   public static final int EXPRESION = 24;
   public static final int VAR = 2;
   public static final String[] terminalNames = new String[] {
@@ -76,8 +74,6 @@ public class sym {
   "ARITMETICA",
   "ESTADISTICA",
   "TITULO_EJE",
-  "LABEL",
-  "VALUES",
   "TITULO_GRAFICA"
   };
 }

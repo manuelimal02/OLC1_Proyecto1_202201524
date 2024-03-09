@@ -20,12 +20,12 @@ terminal PARENTESIS_IZQUIERDO, PARENTESIS_DERECHO, COMA;
 
 terminal EXEC, PRINT, COLUMN, CONSOLE, TIPO_GRAFICA;
 terminal CADENA, ENTERO, DECIMAL , EXPRESION, EXPRESION_ARRAY, ARRAY, PROGRAM, END_PROGRAM, ARITMETICA, ESTADISTICA;
-terminal TITULO_EJE, LABEL, VALUES, TITULO_GRAFICA;
+terminal TITULO_EJE, TITULO_GRAFICA;
 
 //------------------------------------------------------------------------------
 non terminal ArbolSintactico inicio, declaraciones, declaracion;
 
-non terminal ArbolSintactico valor_grafica, valor_variable, contenido_array, contenido_grafica, lista_array, tipo;
+non terminal ArbolSintactico valor_grafica, valor_variable, contenido_array, contenido_grafica, lista_array;
 
 //------------------------------------------------------------------------------
 start with inicio;
@@ -229,7 +229,7 @@ declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL valor_variable:valor_
 //------------------------------------------------------------------------------
 valor_grafica ::=  TITULO_GRAFICA:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 TIPO_VARIABLE:tipo_val IGUAL:igual valor_variable:valor_val END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico contenido = new ArbolSintactico("Contenuido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -242,7 +242,20 @@ valor_grafica ::=  TITULO_GRAFICA:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_p
 :}
             | TITULO_EJE:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 TIPO_VARIABLE:tipo_val IGUAL:igual contenido_array:valor_val END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico contenido = new ArbolSintactico("Contenuido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
+    contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
+    contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
+    contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
+    contenido.AgregarHijo(new ArbolSintactico(tipo_val.toString()));
+    contenido.AgregarHijo(new ArbolSintactico(igual.toString()));
+    contenido.AgregarHijo(valor_val);
+    contenido.AgregarHijo(new ArbolSintactico(end.toString()));
+    contenido.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
+    RESULT = contenido;
+:}
+            | TITULO_EJE:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 TIPO_VARIABLE:tipo_val IGUAL:igual valor_variable:valor_val END:end PUNTO_COMA:punto_coma
+{:
+    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -257,7 +270,7 @@ valor_grafica ::=  TITULO_GRAFICA:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_p
 //------------------------------------------------------------------------------
 declaracion::= TIPO_GRAFICA:tipo_grafica1 PARENTESIS_IZQUIERDO:par_iz contenido_grafica:cont_graph EXEC:exec TIPO_GRAFICA:tipo_grafica2 END:end1 PUNTO_COMA:punto_coma1 PARENTESIS_DERECHO:par_de END:end2 PUNTO_COMA:punto_coma2
 {:
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion");
+    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Grafica");
     declaracion.AgregarHijo(new ArbolSintactico(tipo_grafica1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(par_iz.toString()));
     declaracion.AgregarHijo(cont_graph);

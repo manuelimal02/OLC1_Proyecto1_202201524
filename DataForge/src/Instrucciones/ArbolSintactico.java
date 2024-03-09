@@ -2,12 +2,13 @@ package Instrucciones;
 import java.util.LinkedList;
 import javax.swing.*;
 import java.util.*;
+import Reportes.*;
 /**
  *
  * @author manuel
  */
 public class ArbolSintactico {
-    
+    //-----------------------------------------------------------------------------------------------------------------------------------
     private String Elemento;
     public String Result;
     private LinkedList<ArbolSintactico> Hijos;
@@ -20,13 +21,6 @@ public class ArbolSintactico {
         this.Hijos.add(Hijo);
     }
     
-    public void ImprimirArbol(ArbolSintactico Raiz){
-        for(ArbolSintactico Hijo: Raiz.Hijos){
-            ImprimirArbol(Hijo);
-        }
-        System.out.println(Raiz.getElemento());
-    }
-    
     public String BuscarVariable(LinkedList<SimboloNodo> TablaS, String Variable){
         for (SimboloNodo Simbolo : TablaS) {
             if(Simbolo.getNombre().equals(Variable)){
@@ -35,6 +29,7 @@ public class ArbolSintactico {
         }
         return "ERROR SEMANTICO";
     }
+    //-----------------------------------------------------------------------------------------------------------------------------------
     public static String calcularMedia(String cadena) {
         String[] numerosComoStrings = cadena.split(",");
         double suma = 0;
@@ -55,6 +50,7 @@ public class ArbolSintactico {
             return "No hay números válidos para calcular la media.";
         }
     }
+    //--------------------------------------------------------------------------
     public static String calcularMediana(String cadena) {
         String[] numerosComoStrings = cadena.split(",");
         double[] numeros = new double[numerosComoStrings.length];
@@ -77,6 +73,7 @@ public class ArbolSintactico {
         }
         return String.format("%.2f", mediana);
     }
+    //--------------------------------------------------------------------------
     public static String calcularModa(String cadena) {
         String[] numerosComoStrings = cadena.split(",");
         Map<Double, Integer> frecuenciaMap = new HashMap<>();
@@ -104,6 +101,7 @@ public class ArbolSintactico {
         }
         return String.format("%.2f", moda);
     }
+    //--------------------------------------------------------------------------
     public static String calcularVarianza(String cadena) {
         String[] numerosComoStrings = cadena.split(",");
         double[] numeros = new double[numerosComoStrings.length];
@@ -129,6 +127,7 @@ public class ArbolSintactico {
         }
         return suma / numeros.length;
     }
+    //--------------------------------------------------------------------------
     public static String encontrarValorMaximo(String cadena) {
         String[] numerosComoStrings = cadena.split(",");
         double[] numeros = new double[numerosComoStrings.length];
@@ -147,6 +146,7 @@ public class ArbolSintactico {
         }
         return String.format("%.2f", valorMaximo);
     }
+    //--------------------------------------------------------------------------
     public static String encontrarValorMinimo(String cadena) {
         String[] numerosComoStrings = cadena.split(",");
         double[] numeros = new double[numerosComoStrings.length];
@@ -165,6 +165,7 @@ public class ArbolSintactico {
         }
         return String.format("%.2f", valorMinimo);
     }
+    //--------------------------------------------------------------------------
     public static String imprimirVariable(String cadena) {
         String[] elementos = cadena.split(",");
         StringBuilder resultado = new StringBuilder();
@@ -177,6 +178,7 @@ public class ArbolSintactico {
         }
         return resultado.toString();
     }
+    //--------------------------------------------------------------------------
     public static String imprimirArreglo(String titulo, String lista) {
         StringBuilder resultado = new StringBuilder();
         titulo = titulo.replaceAll("^\"|\"$", "");
@@ -188,11 +190,12 @@ public class ArbolSintactico {
             String elementoTrimmed = elemento.trim().replaceAll("^\"|\"$", "");
             resultado.append(elementoTrimmed).append("\n");
         }
-        return resultado.toString();
+        return resultado.toString().trim();
     }
-    public void EjecutarInterprete(ArbolSintactico Raiz, JTextArea Consola, LinkedList<SimboloNodo> TablaS){
+    //-----------------------------------------------------------------------------------------------------------------------------------
+    public void EjecutarInterprete(ArbolSintactico Raiz, JTextArea Consola, LinkedList<SimboloNodo> TablaS, JTabbedPane tabbedPane){
         for (ArbolSintactico Hijo: Raiz.Hijos){
-            EjecutarInterprete(Hijo, Consola, TablaS);
+            EjecutarInterprete(Hijo, Consola, TablaS, tabbedPane);
         }
         if(Raiz.getElemento()=="Declaracion Variable"){
             SimboloNodo SimboloNuevo = new SimboloNodo(
@@ -224,9 +227,26 @@ public class ArbolSintactico {
             String Arreglo = imprimirArreglo(Raiz.getHijos().get(0).Result, Raiz.getHijos().get(1).Result);
             Consola.append(Arreglo+"\n");
         }
+        else if(Raiz.getElemento()=="Declaracion Grafica" & Raiz.getHijos().size()==10){
+            if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHBAR")){
+                String Graph = GraficaBarra.crearGrafica(Raiz.getHijos().get(2).Result, tabbedPane);
+                Consola.append(Graph+"\n");
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHPIE")){
+                String Graph = GraficaCircular.crearGraficaCircular(Raiz.getHijos().get(2).Result, tabbedPane);
+                Consola.append(Graph+"\n");
+            }
+            else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHLINE")){
+                String Graph = GraficaLineal.crearGraficaLineas(Raiz.getHijos().get(2).Result, tabbedPane);
+                Consola.append(Graph+"\n");
+            }
+            else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("HISTOGRAM")){
+                String Graph = GraficaHistograma.crearHistograma(Raiz.getHijos().get(2).Result, tabbedPane);
+                Consola.append(Graph+"\n");
+            }
+        }
         else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==1){
             Raiz.Result=Raiz.getHijos().get(0).getElemento();
-            if(Raiz.getElemento()=="valor Variable" && (Raiz.getHijos().get(0).getElemento().startsWith("\""))){
+            if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().get(0).getElemento().startsWith("\"")){
                 Raiz.Result=Raiz.getHijos().get(0).getElemento();
             }else{
                 try{
@@ -259,63 +279,65 @@ public class ArbolSintactico {
                 }
             }
         }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==4){
-            if(Raiz.getHijos().get(0).getElemento().equals("Media")){
+            if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MEDIA")){
                 String Media = calcularMedia(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Media;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Mediana")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MEDIANA")){
                 String Mediana = calcularMediana(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Mediana;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Moda")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MODA")){
+                System.out.println("-------------"+Raiz.getHijos().get(2).Result);
                 String Moda = calcularModa(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Moda;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Varianza")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("VARIANZA")){
                 String Varianza = calcularVarianza(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Varianza;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Max")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MAX")){
                 String Maximo = encontrarValorMaximo(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Maximo;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Min")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MIN")){
                 String Minimo = encontrarValorMinimo(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Minimo;
             }
         }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==2){
-            if(Raiz.getHijos().get(0).getElemento().equals("Media")){
+            if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MEDIA")){
                 String Media = calcularMedia(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Media;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Mediana")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MEDIANA")){
                 String Mediana = calcularMediana(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Mediana;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Moda")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MODA")){
+                System.out.println("-------------"+Raiz.getHijos().get(1).Result);
                 String Moda = calcularModa(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Moda;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Varianza")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("VARIANZA")){
                 String Varianza = calcularVarianza(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Varianza;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Max")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MAX")){
                 String Maximo = encontrarValorMaximo(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Maximo;
-            }else if(Raiz.getHijos().get(0).getElemento().equals("Min")){
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MIN")){
                 String Minimo = encontrarValorMinimo(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Minimo;
             }      
         }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==6){
-             if(Raiz.getHijos().get(0).getElemento().equals("SUM")){
+             if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("SUM")){
                 Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
                 Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
                 Raiz.Result = String.valueOf(Primero+Segundo);
-             }else if(Raiz.getHijos().get(0).getElemento().equals("RES")){
+             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("RES")){
                 Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
                 Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
                 Raiz.Result = String.valueOf(Primero-Segundo);
-             }else if(Raiz.getHijos().get(0).getElemento().equals("MUL")){
+             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MUL")){
                 Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
                 Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
                 Raiz.Result = String.valueOf(Primero*Segundo);
-             }else if(Raiz.getHijos().get(0).getElemento().equals("DIV")){
+             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("DIV")){
                 Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
                 Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
                 Raiz.Result = String.valueOf(Primero/Segundo);
-             }else if(Raiz.getHijos().get(0).getElemento().equals("MOD")){
+             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MOD")){
                 Double Primero = Double.parseDouble(Raiz.getHijos().get(2).Result);
                 Double Segundo = Double.parseDouble(Raiz.getHijos().get(4).Result);
                 Raiz.Result = String.valueOf(Primero%Segundo);
@@ -326,6 +348,28 @@ public class ArbolSintactico {
             Raiz.Result=Raiz.getHijos().get(0).Result; 
         }else if(Raiz.getElemento()=="Contenido Array"){
             Raiz.Result=Raiz.getHijos().get(1).Result;
+        }else if(Raiz.getElemento()=="Lista Grafica" && Raiz.getHijos().size()==2){
+            Raiz.Result=Raiz.getHijos().get(0).Result + " | "+Raiz.getHijos().get(1).Result; 
+        }else if(Raiz.getElemento()=="Lista Grafica" && Raiz.getHijos().size()==1){
+            Raiz.Result=Raiz.getHijos().get(0).Result; 
+        }else if(Raiz.getElemento()=="Contenido Grafica"){
+            if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("TITULO")){
+                Raiz.Result="TITULO: "+Raiz.getHijos().get(5).Result;
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("EJEX")){
+                Raiz.Result="EJEX: "+Raiz.getHijos().get(5).Result;
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("EJEY")){
+                Raiz.Result="EJEY: "+Raiz.getHijos().get(5).Result;
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("TITULOX")){
+                Raiz.Result="TITULOX: "+Raiz.getHijos().get(5).Result;
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("TITULOY")){
+                Raiz.Result="TITULOY: "+Raiz.getHijos().get(5).Result;
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("VALUES")){
+                Raiz.Result="VALUES: "+Raiz.getHijos().get(5).Result;
+            }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("LABEL")){
+                Raiz.Result="LABEL: "+Raiz.getHijos().get(5).Result;
+            }else{
+                 Raiz.Result=Raiz.getHijos().get(5).Result;
+            }
         }
     }
     

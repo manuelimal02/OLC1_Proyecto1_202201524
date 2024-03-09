@@ -160,11 +160,11 @@ DECIMAL = {ENTERO}\.{ENTERO}
 }
 "values"                {
                     tokens.add(new Token("VALUES", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.VALUES, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
 }
 "label"                 {
                     tokens.add(new Token("LABEL", yytext(), yyline, yycolumn));
-                    return new Symbol(sym.LABEL, yyline, yycolumn, yytext());
+                    return new Symbol(sym.TITULO_EJE, yyline, yycolumn, yytext());
 }
 "graphLine"             {
                     tokens.add(new Token("GRAPHLINE", yytext(), yyline, yycolumn));
