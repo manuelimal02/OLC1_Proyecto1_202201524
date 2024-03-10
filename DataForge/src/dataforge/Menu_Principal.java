@@ -409,7 +409,6 @@ public class Menu_Principal extends javax.swing.JFrame {
                 System.out.println("Tipo: " + error.getTipo() +" -- Token: "+ error.getToken()+" -- Linea: "+ error.getLinea()+" -- Columna: "+ error.getColumna());
             }
             JOptionPane.showMessageDialog(null, "Análisis De Archivo Realizado Correctamente ", "Ejecutar Análisis", JOptionPane.INFORMATION_MESSAGE);
-            jTextArea1.enable(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e, "Ejecutar Análisis", JOptionPane.ERROR_MESSAGE);
         }      
