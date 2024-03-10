@@ -1,16 +1,21 @@
 package AnalizadoresLexicoSintactico;
 import java_cup.runtime.*;
 import Instrucciones.ArbolSintactico;
+import java.util.LinkedList;
+import dataforge.ErrorSintactico;
 
 parser code 
 {:
-        
-        public void syntax_error(Symbol s){
-            System.out.println("Error Sintactico: "+s.value+" , Linea: "+s.left+" Columna: "+s.right);
+    public LinkedList<ErrorSintactico> syntaxErrors = new LinkedList<>();
+
+    public void syntax_error(Symbol s){
+        if (s.value != null){
+            syntaxErrors.add(new ErrorSintactico("Sintactico", s.value.toString(), s.left, s.right));
         }
-        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-            System.out.println("Error SintActico unrecovered: "+s.value+" , linea: "+s.left+" columna: "+s.right);
-        }
+    }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.out.println("Error Sintactico No Recuperado: "+s.value+" , linea: "+s.left+" columna: "+s.right);
+    }
 :}
 
 terminal VAR, TIPO_VARIABLE, END;
@@ -33,7 +38,7 @@ start with inicio;
 inicio ::= PROGRAM:program declaraciones:sentencias END_PROGRAM:end_program
 
 {:
-    ArbolSintactico inicio = new ArbolSintactico("Inicio");
+    ArbolSintactico inicio = new ArbolSintactico("INICIO");
     inicio.AgregarHijo(new ArbolSintactico(program.toString()));
     inicio.AgregarHijo(sentencias);
     inicio.AgregarHijo(new ArbolSintactico(end_program.toString()));
@@ -42,7 +47,7 @@ inicio ::= PROGRAM:program declaraciones:sentencias END_PROGRAM:end_program
 
 declaraciones ::= declaraciones:sentencias declaracion:sentencia 
 {:
-    ArbolSintactico declaraciones = new ArbolSintactico("Declaracion");
+    ArbolSintactico declaraciones = new ArbolSintactico("DECLARACION");
     declaraciones.AgregarHijo(sentencias);
     declaraciones.AgregarHijo(sentencia);
     RESULT = declaraciones;
@@ -51,7 +56,7 @@ declaraciones ::= declaraciones:sentencias declaracion:sentencia
                 | declaracion:sentencia 
 
 {:
-    ArbolSintactico declaraciones = new ArbolSintactico("Declaracion");
+    ArbolSintactico declaraciones = new ArbolSintactico("DECLARACION");
     declaraciones.AgregarHijo(sentencia);
     RESULT = declaraciones;
     
@@ -60,39 +65,39 @@ declaraciones ::= declaraciones:sentencias declaracion:sentencia
 //------------------------------------------------------------------------------
 valor_variable ::=    ENTERO:valor1
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 :}
                     | DECIMAL:valor1  
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 :}
                     | CADENA:valor1 
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 :}
                     | EXPRESION:valor1
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 :}
 
                    | EXPRESION_ARRAY:valor1
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 :}
 
                     | ARITMETICA:aritmetica PARENTESIS_IZQUIERDO:parentesis_izquierdo valor_variable:valor1 COMA:coma valor_variable:valor2 PARENTESIS_DERECHO:parentesis_derecho
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(aritmetica.toString()));
     valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
     valor.AgregarHijo(valor1);
@@ -104,7 +109,7 @@ valor_variable ::=    ENTERO:valor1
 
                     | ESTADISTICA:estadistica PARENTESIS_IZQUIERDO:parentesis_izquierdo contenido_array:contenido PARENTESIS_DERECHO:parentesis_derecho
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
     valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
     valor.AgregarHijo(contenido);
@@ -115,7 +120,7 @@ valor_variable ::=    ENTERO:valor1
 
                    | ESTADISTICA:estadistica PARENTESIS_IZQUIERDO:parentesis_izquierdo valor_variable:valor2 PARENTESIS_DERECHO:parentesis_derecho
 {:
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
     valor.AgregarHijo(valor2);
     RESULT = valor;
@@ -125,7 +130,7 @@ valor_variable ::=    ENTERO:valor1
 //------------------------------------------------------------------------------
 declaracion ::= VAR:var DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_PUNTOS:dos_puntos2 DOS_PUNTOS:dos_puntos3 EXPRESION:expresion MENOR_QUE:menor_que MENOS:menos valor_variable:valor END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Variable");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION VARIABLE");
     declaracion.AgregarHijo(new ArbolSintactico(var.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(tipo_variable.toString()));
@@ -137,13 +142,21 @@ declaracion ::= VAR:var DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_P
     declaracion.AgregarHijo(valor);
     declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableleft)));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableright)));
     RESULT = declaracion; 
-:};
+:}
+    | error
+{:
+    ArbolSintactico declaracion = new ArbolSintactico("Error");
+    RESULT = declaracion; 
+:}
+;
 
 //------------------------------------------------------------------------------
 declaracion ::= ARRAY:array DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable DOS_PUNTOS:dos_puntos2 DOS_PUNTOS:dos_puntos3 EXPRESION_ARRAY:expresion_array MENOR_QUE:menor_que MENOS:menos contenido_array:contenido END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Arreglo");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION ARREGLO");
     declaracion.AgregarHijo(new ArbolSintactico(array.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(tipo_variable.toString()));
@@ -155,13 +168,15 @@ declaracion ::= ARRAY:array DOS_PUNTOS:dos_puntos1 TIPO_VARIABLE:tipo_variable D
     declaracion.AgregarHijo(contenido);
     declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableleft)));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableright)));
     RESULT = declaracion;
 :}
 ;
 
 contenido_array ::= CORCHETE_IZQUIERDO:corchete_izquierdo lista_array:lista CORCHETE_DERECHO:corchete_derecho
 {:
-    ArbolSintactico contenido_array = new ArbolSintactico("Contenido Array");
+    ArbolSintactico contenido_array = new ArbolSintactico("ASIGNACION CONTENIDO ARREGLO");
     contenido_array.AgregarHijo(new ArbolSintactico(corchete_izquierdo.toString()));
     contenido_array.AgregarHijo(lista);
     contenido_array.AgregarHijo(new ArbolSintactico(corchete_derecho.toString()));
@@ -171,7 +186,7 @@ contenido_array ::= CORCHETE_IZQUIERDO:corchete_izquierdo lista_array:lista CORC
 
 lista_array ::= lista_array:lista COMA:coma valor_variable:valor_var 
 {:
-    ArbolSintactico lista_array = new ArbolSintactico("Lista Array");
+    ArbolSintactico lista_array = new ArbolSintactico("ASIGNACION LISTA ARREGLO");
     lista_array.AgregarHijo(lista);
     lista_array.AgregarHijo(new ArbolSintactico(coma.toString()));
     lista_array.AgregarHijo(valor_var);
@@ -179,7 +194,7 @@ lista_array ::= lista_array:lista COMA:coma valor_variable:valor_var
 :}
         | valor_variable:valor1
 {:
-    ArbolSintactico valor = new ArbolSintactico("Lista Array");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION LISTA ARREGLO");
     valor.AgregarHijo(valor1);
     RESULT = valor;   
 :}
@@ -188,7 +203,7 @@ lista_array ::= lista_array:lista COMA:coma valor_variable:valor_var
 //------------------------------------------------------------------------------
 declaracion ::= CONSOLE:console DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 PRINT:print IGUAL:igual lista_array:lista END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Imprimir");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION IMPRIMIR");
     declaracion.AgregarHijo(new ArbolSintactico(console.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -203,7 +218,7 @@ declaracion ::= CONSOLE:console DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 PR
 //------------------------------------------------------------------------------
 declaracion ::= CONSOLE:console DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 COLUMN:column IGUAL:igual valor_variable:valor_var1 MENOS:menos MAYOR_QUE:mayor_que valor_variable:valor_var2 END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Imprimir");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION IMPRIMIR");
     declaracion.AgregarHijo(new ArbolSintactico(console.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -220,7 +235,7 @@ declaracion ::= CONSOLE:console DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 CO
 
 declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL valor_variable:valor_var1 MENOS MAYOR_QUE contenido_array:contenido END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Imprimir");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION IMPRIMIR");
     declaracion.AgregarHijo(valor_var1);
     declaracion.AgregarHijo(contenido);
     RESULT = declaracion;
@@ -229,7 +244,7 @@ declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL valor_variable:valor_
 //------------------------------------------------------------------------------
 valor_grafica ::=  TITULO_GRAFICA:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 TIPO_VARIABLE:tipo_val IGUAL:igual valor_variable:valor_val END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("ASIGNACION CONTENIDO GRAFICA");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -242,7 +257,7 @@ valor_grafica ::=  TITULO_GRAFICA:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_p
 :}
             | TITULO_EJE:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 TIPO_VARIABLE:tipo_val IGUAL:igual contenido_array:valor_val END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("ASIGNACION CONTENIDO GRAFICA");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -255,7 +270,7 @@ valor_grafica ::=  TITULO_GRAFICA:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_p
 :}
             | TITULO_EJE:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_puntos2 TIPO_VARIABLE:tipo_val IGUAL:igual valor_variable:valor_val END:end PUNTO_COMA:punto_coma
 {:
-    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("ASIGNACION CONTENIDO GRAFICA");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -270,7 +285,7 @@ valor_grafica ::=  TITULO_GRAFICA:titulo DOS_PUNTOS:dos_puntos1 DOS_PUNTOS:dos_p
 //------------------------------------------------------------------------------
 declaracion::= TIPO_GRAFICA:tipo_grafica1 PARENTESIS_IZQUIERDO:par_iz contenido_grafica:cont_graph EXEC:exec TIPO_GRAFICA:tipo_grafica2 END:end1 PUNTO_COMA:punto_coma1 PARENTESIS_DERECHO:par_de END:end2 PUNTO_COMA:punto_coma2
 {:
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Grafica");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION GRAFICA");
     declaracion.AgregarHijo(new ArbolSintactico(tipo_grafica1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(par_iz.toString()));
     declaracion.AgregarHijo(cont_graph);
@@ -286,14 +301,14 @@ declaracion::= TIPO_GRAFICA:tipo_grafica1 PARENTESIS_IZQUIERDO:par_iz contenido_
 
 contenido_grafica::= contenido_grafica:lista valor_grafica:valor_g 
 {:
-    ArbolSintactico contenido_grafica= new ArbolSintactico("Lista Grafica");
+    ArbolSintactico contenido_grafica= new ArbolSintactico("ASIGNACION LISTA GRAFICA");
     contenido_grafica.AgregarHijo(lista);
     contenido_grafica.AgregarHijo(valor_g);
     RESULT = contenido_grafica;
 :}
                 |valor_grafica:valor_g
 {:
-    ArbolSintactico contenido_grafica= new ArbolSintactico("Lista Grafica");
+    ArbolSintactico contenido_grafica= new ArbolSintactico("ASIGNACION LISTA GRAFICA");
     contenido_grafica.AgregarHijo(valor_g);
     RESULT = contenido_grafica;
 :}

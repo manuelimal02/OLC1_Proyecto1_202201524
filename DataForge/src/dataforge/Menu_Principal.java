@@ -29,6 +29,7 @@ public class Menu_Principal extends javax.swing.JFrame {
         int yPos = (screenSize.height - getHeight()) / 2;
 
         setLocation(xPos, yPos);
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -366,12 +367,9 @@ public class Menu_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        if (AppState.listaErrorLexico.isEmpty()){
-            JOptionPane.showMessageDialog(null, "La Lista De Errores Léxicos Está Vacía", "Reporte Errores Léxicos", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
         JOptionPane.showMessageDialog(null, "Reporte Creado Correctamente", "Reporte Errores Léxicos", JOptionPane.INFORMATION_MESSAGE);
         ReporteHTML.Generar_Reporte_ErrorLexico(AppState.listaErrorLexico, "Reporte_Errores_Léxicos_202201524.html");
+        ReporteHTML.Generar_Reporte_ErrorSintactico(AppState.listaErrorSintactico, "Reporte_Errores_Sintáctico_202201524.html");
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
@@ -384,6 +382,7 @@ public class Menu_Principal extends javax.swing.JFrame {
         try {
             AppState.listaToken.clear();
             AppState.listaErrorLexico.clear();
+            AppState.listaErrorSintactico.clear();
             AppState.tablaSimbolo.clear();
             jTextArea1.setText("");
             jTabbedPane2.removeAll();
@@ -397,14 +396,20 @@ public class Menu_Principal extends javax.swing.JFrame {
             System.out.println("----------------------------------------------"); 
             AppState.listaToken.addAll(lexico.tokens);
             AppState.listaErrorLexico.addAll(lexico.lexicalErrors);
+            AppState.listaErrorSintactico.addAll(sintactico.syntaxErrors);
             for (SimboloNodo Simbolo : AppState.tablaSimbolo) {
                 System.out.println("Nombre: " + Simbolo.getNombre() +" -- Tipo: "+ Simbolo.getTipo()+" -- Valor: "+Simbolo.getValor()+" -- Rol: "+Simbolo.getRol());
             } 
             System.out.println("----------------------------------------------");
             for (Token token : AppState.listaToken) {
                 System.out.println("Lexema: " + token.getLexema() +" -- Token: "+ token.getTipo());
-            }       
+            }
+            System.out.println("----------------------------------------------");
+            for (ErrorSintactico error : AppState.listaErrorSintactico) {
+                System.out.println("Tipo: " + error.getTipo() +" -- Token: "+ error.getToken()+" -- Linea: "+ error.getLinea()+" -- Columna: "+ error.getColumna());
+            }
             JOptionPane.showMessageDialog(null, "Análisis De Archivo Realizado Correctamente ", "Ejecutar Análisis", JOptionPane.INFORMATION_MESSAGE);
+            jTextArea1.enable(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e, "Ejecutar Análisis", JOptionPane.ERROR_MESSAGE);
         }      

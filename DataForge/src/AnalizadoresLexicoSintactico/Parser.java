@@ -7,6 +7,8 @@ package AnalizadoresLexicoSintactico;
 
 import java_cup.runtime.*;
 import Instrucciones.ArbolSintactico;
+import java.util.LinkedList;
+import dataforge.ErrorSintactico;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -32,15 +34,15 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\032\000\002\002\004\000\002\002\005\000\002\003" +
+    "\000\033\000\002\002\004\000\002\002\005\000\002\003" +
     "\004\000\002\003\003\000\002\006\003\000\002\006\003" +
     "\000\002\006\003\000\002\006\003\000\002\006\003\000" +
     "\002\006\010\000\002\006\006\000\002\006\006\000\002" +
-    "\004\015\000\002\004\015\000\002\007\005\000\002\011" +
-    "\005\000\002\011\003\000\002\004\012\000\002\004\015" +
-    "\000\002\004\015\000\002\005\012\000\002\005\012\000" +
-    "\002\005\012\000\002\004\014\000\002\010\004\000\002" +
-    "\010\003" });
+    "\004\015\000\002\004\003\000\002\004\015\000\002\007" +
+    "\005\000\002\011\005\000\002\011\003\000\002\004\012" +
+    "\000\002\004\015\000\002\004\015\000\002\005\012\000" +
+    "\002\005\012\000\002\005\012\000\002\004\014\000\002" +
+    "\010\004\000\002\010\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -48,79 +50,82 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\147\000\004\035\005\001\002\000\004\002\151\001" +
-    "\002\000\012\004\006\025\012\026\010\034\013\001\002" +
-    "\000\004\010\137\001\002\000\014\004\006\025\012\026" +
-    "\010\034\013\036\135\001\002\000\004\017\077\001\002" +
-    "\000\014\004\ufffe\025\ufffe\026\ufffe\034\ufffe\036\ufffe\001" +
-    "\002\000\004\010\055\001\002\000\004\010\014\001\002" +
-    "\000\004\005\015\001\002\000\004\010\016\001\002\000" +
-    "\004\010\017\001\002\000\004\033\020\001\002\000\004" +
-    "\011\021\001\002\000\004\007\022\001\002\000\004\015" +
-    "\024\001\002\000\004\006\053\001\002\000\020\027\025" +
-    "\030\032\031\026\032\035\033\031\037\030\040\033\001" +
-    "\002\000\014\006\ufffb\007\ufffb\016\ufffb\020\ufffb\021\ufffb" +
-    "\001\002\000\014\006\ufffc\007\ufffc\016\ufffc\020\ufffc\021" +
-    "\ufffc\001\002\000\006\016\051\021\050\001\002\000\004" +
-    "\017\043\001\002\000\014\006\ufff9\007\ufff9\016\ufff9\020" +
-    "\ufff9\021\ufff9\001\002\000\014\006\ufffd\007\ufffd\016\ufffd" +
-    "\020\ufffd\021\ufffd\001\002\000\004\017\036\001\002\000" +
-    "\010\006\ufff1\016\ufff1\021\ufff1\001\002\000\014\006\ufffa" +
-    "\007\ufffa\016\ufffa\020\ufffa\021\ufffa\001\002\000\022\015" +
-    "\024\027\025\030\032\031\026\032\035\033\031\037\030" +
-    "\040\033\001\002\000\004\020\042\001\002\000\004\020" +
-    "\041\001\002\000\014\006\ufff7\007\ufff7\016\ufff7\020\ufff7" +
-    "\021\ufff7\001\002\000\014\006\ufff6\007\ufff6\016\ufff6\020" +
-    "\ufff6\021\ufff6\001\002\000\020\027\025\030\032\031\026" +
-    "\032\035\033\031\037\030\040\033\001\002\000\004\021" +
-    "\045\001\002\000\020\027\025\030\032\031\026\032\035" +
-    "\033\031\037\030\040\033\001\002\000\004\020\047\001" +
-    "\002\000\014\006\ufff8\007\ufff8\016\ufff8\020\ufff8\021\ufff8" +
-    "\001\002\000\020\027\025\030\032\031\026\032\035\033" +
-    "\031\037\030\040\033\001\002\000\006\006\ufff3\020\ufff3" +
-    "\001\002\000\010\006\ufff2\016\ufff2\021\ufff2\001\002\000" +
-    "\004\012\054\001\002\000\014\004\ufff4\025\ufff4\026\ufff4" +
-    "\034\ufff4\036\ufff4\001\002\000\004\010\056\001\002\000" +
-    "\006\023\057\024\060\001\002\000\004\013\073\001\002" +
-    "\000\004\013\061\001\002\000\020\027\025\030\032\031" +
-    "\026\032\035\033\031\037\030\040\033\001\002\000\004" +
-    "\007\063\001\002\000\004\014\064\001\002\000\022\015" +
-    "\024\027\025\030\032\031\026\032\035\033\031\037\030" +
-    "\040\033\001\002\000\004\006\071\001\002\000\004\006" +
-    "\067\001\002\000\004\012\070\001\002\000\014\004\uffee" +
-    "\025\uffee\026\uffee\034\uffee\036\uffee\001\002\000\004\012" +
-    "\072\001\002\000\014\004\uffef\025\uffef\026\uffef\034\uffef" +
-    "\036\uffef\001\002\000\020\027\025\030\032\031\026\032" +
-    "\035\033\031\037\030\040\033\001\002\000\006\006\075" +
-    "\021\050\001\002\000\004\012\076\001\002\000\014\004" +
-    "\ufff0\025\ufff0\026\ufff0\034\ufff0\036\ufff0\001\002\000\006" +
-    "\041\100\042\102\001\002\000\004\010\123\001\002\000" +
-    "\010\022\uffe8\041\uffe8\042\uffe8\001\002\000\004\010\114" +
-    "\001\002\000\010\022\105\041\100\042\102\001\002\000" +
-    "\010\022\uffe9\041\uffe9\042\uffe9\001\002\000\004\026\106" +
-    "\001\002\000\004\006\107\001\002\000\004\012\110\001" +
-    "\002\000\004\020\111\001\002\000\004\006\112\001\002" +
-    "\000\004\012\113\001\002\000\014\004\uffea\025\uffea\026" +
-    "\uffea\034\uffea\036\uffea\001\002\000\004\010\115\001\002" +
-    "\000\004\005\116\001\002\000\004\013\117\001\002\000" +
-    "\020\027\025\030\032\031\026\032\035\033\031\037\030" +
-    "\040\033\001\002\000\004\006\121\001\002\000\004\012" +
-    "\122\001\002\000\010\022\uffed\041\uffed\042\uffed\001\002" +
-    "\000\004\010\124\001\002\000\004\005\125\001\002\000" +
-    "\004\013\126\001\002\000\022\015\024\027\025\030\032" +
-    "\031\026\032\035\033\031\037\030\040\033\001\002\000" +
-    "\004\006\133\001\002\000\004\006\131\001\002\000\004" +
-    "\012\132\001\002\000\010\022\uffec\041\uffec\042\uffec\001" +
-    "\002\000\004\012\134\001\002\000\010\022\uffeb\041\uffeb" +
-    "\042\uffeb\001\002\000\004\002\000\001\002\000\014\004" +
-    "\uffff\025\uffff\026\uffff\034\uffff\036\uffff\001\002\000\004" +
-    "\005\140\001\002\000\004\010\141\001\002\000\004\010" +
-    "\142\001\002\000\004\032\143\001\002\000\004\011\144" +
-    "\001\002\000\004\007\145\001\002\000\020\027\025\030" +
-    "\032\031\026\032\035\033\031\037\030\040\033\001\002" +
-    "\000\004\006\147\001\002\000\004\012\150\001\002\000" +
-    "\014\004\ufff5\025\ufff5\026\ufff5\034\ufff5\036\ufff5\001\002" +
-    "\000\004\002\001\001\002" });
+    "\000\150\000\004\035\005\001\002\000\004\002\152\001" +
+    "\002\000\014\003\011\004\006\025\013\026\010\034\014" +
+    "\001\002\000\004\010\140\001\002\000\016\003\011\004" +
+    "\006\025\013\026\010\034\014\036\136\001\002\000\004" +
+    "\017\100\001\002\000\016\003\ufff4\004\ufff4\025\ufff4\026" +
+    "\ufff4\034\ufff4\036\ufff4\001\002\000\016\003\ufffe\004\ufffe" +
+    "\025\ufffe\026\ufffe\034\ufffe\036\ufffe\001\002\000\004\010" +
+    "\056\001\002\000\004\010\015\001\002\000\004\005\016" +
+    "\001\002\000\004\010\017\001\002\000\004\010\020\001" +
+    "\002\000\004\033\021\001\002\000\004\011\022\001\002" +
+    "\000\004\007\023\001\002\000\004\015\025\001\002\000" +
+    "\004\006\054\001\002\000\020\027\026\030\033\031\027" +
+    "\032\036\033\032\037\031\040\034\001\002\000\014\006" +
+    "\ufffb\007\ufffb\016\ufffb\020\ufffb\021\ufffb\001\002\000\014" +
+    "\006\ufffc\007\ufffc\016\ufffc\020\ufffc\021\ufffc\001\002\000" +
+    "\006\016\052\021\051\001\002\000\004\017\044\001\002" +
+    "\000\014\006\ufff9\007\ufff9\016\ufff9\020\ufff9\021\ufff9\001" +
+    "\002\000\014\006\ufffd\007\ufffd\016\ufffd\020\ufffd\021\ufffd" +
+    "\001\002\000\004\017\037\001\002\000\010\006\ufff0\016" +
+    "\ufff0\021\ufff0\001\002\000\014\006\ufffa\007\ufffa\016\ufffa" +
+    "\020\ufffa\021\ufffa\001\002\000\022\015\025\027\026\030" +
+    "\033\031\027\032\036\033\032\037\031\040\034\001\002" +
+    "\000\004\020\043\001\002\000\004\020\042\001\002\000" +
+    "\014\006\ufff7\007\ufff7\016\ufff7\020\ufff7\021\ufff7\001\002" +
+    "\000\014\006\ufff6\007\ufff6\016\ufff6\020\ufff6\021\ufff6\001" +
+    "\002\000\020\027\026\030\033\031\027\032\036\033\032" +
+    "\037\031\040\034\001\002\000\004\021\046\001\002\000" +
+    "\020\027\026\030\033\031\027\032\036\033\032\037\031" +
+    "\040\034\001\002\000\004\020\050\001\002\000\014\006" +
+    "\ufff8\007\ufff8\016\ufff8\020\ufff8\021\ufff8\001\002\000\020" +
+    "\027\026\030\033\031\027\032\036\033\032\037\031\040" +
+    "\034\001\002\000\006\006\ufff2\020\ufff2\001\002\000\010" +
+    "\006\ufff1\016\ufff1\021\ufff1\001\002\000\004\012\055\001" +
+    "\002\000\016\003\ufff3\004\ufff3\025\ufff3\026\ufff3\034\ufff3" +
+    "\036\ufff3\001\002\000\004\010\057\001\002\000\006\023" +
+    "\061\024\060\001\002\000\004\013\066\001\002\000\004" +
+    "\013\062\001\002\000\020\027\026\030\033\031\027\032" +
+    "\036\033\032\037\031\040\034\001\002\000\006\006\064" +
+    "\021\051\001\002\000\004\012\065\001\002\000\016\003" +
+    "\uffef\004\uffef\025\uffef\026\uffef\034\uffef\036\uffef\001\002" +
+    "\000\020\027\026\030\033\031\027\032\036\033\032\037" +
+    "\031\040\034\001\002\000\004\007\070\001\002\000\004" +
+    "\014\071\001\002\000\022\015\025\027\026\030\033\031" +
+    "\027\032\036\033\032\037\031\040\034\001\002\000\004" +
+    "\006\076\001\002\000\004\006\074\001\002\000\004\012" +
+    "\075\001\002\000\016\003\uffed\004\uffed\025\uffed\026\uffed" +
+    "\034\uffed\036\uffed\001\002\000\004\012\077\001\002\000" +
+    "\016\003\uffee\004\uffee\025\uffee\026\uffee\034\uffee\036\uffee" +
+    "\001\002\000\006\041\101\042\103\001\002\000\004\010" +
+    "\124\001\002\000\010\022\uffe7\041\uffe7\042\uffe7\001\002" +
+    "\000\004\010\115\001\002\000\010\022\106\041\101\042" +
+    "\103\001\002\000\010\022\uffe8\041\uffe8\042\uffe8\001\002" +
+    "\000\004\026\107\001\002\000\004\006\110\001\002\000" +
+    "\004\012\111\001\002\000\004\020\112\001\002\000\004" +
+    "\006\113\001\002\000\004\012\114\001\002\000\016\003" +
+    "\uffe9\004\uffe9\025\uffe9\026\uffe9\034\uffe9\036\uffe9\001\002" +
+    "\000\004\010\116\001\002\000\004\005\117\001\002\000" +
+    "\004\013\120\001\002\000\020\027\026\030\033\031\027" +
+    "\032\036\033\032\037\031\040\034\001\002\000\004\006" +
+    "\122\001\002\000\004\012\123\001\002\000\010\022\uffec" +
+    "\041\uffec\042\uffec\001\002\000\004\010\125\001\002\000" +
+    "\004\005\126\001\002\000\004\013\127\001\002\000\022" +
+    "\015\025\027\026\030\033\031\027\032\036\033\032\037" +
+    "\031\040\034\001\002\000\004\006\134\001\002\000\004" +
+    "\006\132\001\002\000\004\012\133\001\002\000\010\022" +
+    "\uffeb\041\uffeb\042\uffeb\001\002\000\004\012\135\001\002" +
+    "\000\010\022\uffea\041\uffea\042\uffea\001\002\000\004\002" +
+    "\000\001\002\000\016\003\uffff\004\uffff\025\uffff\026\uffff" +
+    "\034\uffff\036\uffff\001\002\000\004\005\141\001\002\000" +
+    "\004\010\142\001\002\000\004\010\143\001\002\000\004" +
+    "\032\144\001\002\000\004\011\145\001\002\000\004\007" +
+    "\146\001\002\000\020\027\026\030\033\031\027\032\036" +
+    "\033\032\037\031\040\034\001\002\000\004\006\150\001" +
+    "\002\000\004\012\151\001\002\000\016\003\ufff5\004\ufff5" +
+    "\025\ufff5\026\ufff5\034\ufff5\036\ufff5\001\002\000\004\002" +
+    "\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -128,42 +133,42 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\147\000\004\002\003\001\001\000\002\001\001\000" +
-    "\006\003\006\004\010\001\001\000\002\001\001\000\004" +
-    "\004\135\001\001\000\002\001\001\000\002\001\001\000" +
+    "\000\150\000\004\002\003\001\001\000\002\001\001\000" +
+    "\006\003\006\004\011\001\001\000\002\001\001\000\004" +
+    "\004\136\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\007\022\001\001\000\002" +
-    "\001\001\000\006\006\033\011\026\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\007\023" +
+    "\001\001\000\002\001\001\000\006\006\034\011\027\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\006\006\036\007\037" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\006\043\001\001\000\002" +
-    "\001\001\000\004\006\045\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\006\051\001\001\000\002\001\001" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
+    "\006\037\007\040\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\006\044" +
+    "\001\001\000\002\001\001\000\004\006\046\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\006\052\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\004\006\061\001\001\000\002\001\001\000" +
-    "\002\001\001\000\006\006\064\007\065\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\006\006\033" +
-    "\011\073\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\006\005\100\010\102\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\005" +
-    "\103\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\001\000\002\001\001\000\006\006\034\011\062\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\004\006\117\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\006\066\001\001\000\002\001\001\000\002\001" +
+    "\001\000\006\006\071\007\072\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\006\006\126\007\127\001\001\000\002\001\001\000\002" +
+    "\002\001\001\000\002\001\001\000\006\005\101\010\103" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\004\005\104\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
-    "\006\145\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001" });
+    "\004\006\120\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\006\006\127\007\130\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\006\146\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -202,13 +207,16 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
 
-        
-        public void syntax_error(Symbol s){
-            System.out.println("Error Sintactico: "+s.value+" , Linea: "+s.left+" Columna: "+s.right);
+    public LinkedList<ErrorSintactico> syntaxErrors = new LinkedList<>();
+
+    public void syntax_error(Symbol s){
+        if (s.value != null){
+            syntaxErrors.add(new ErrorSintactico("Sintactico", s.value.toString(), s.left, s.right));
         }
-        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-            System.out.println("Error SintActico unrecovered: "+s.value+" , linea: "+s.left+" columna: "+s.right);
-        }
+    }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.out.println("Error Sintactico No Recuperado: "+s.value+" , linea: "+s.left+" columna: "+s.right);
+    }
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -263,7 +271,7 @@ class CUP$Parser$actions {
 		int end_programright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object end_program = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico inicio = new ArbolSintactico("Inicio");
+    ArbolSintactico inicio = new ArbolSintactico("INICIO");
     inicio.AgregarHijo(new ArbolSintactico(program.toString()));
     inicio.AgregarHijo(sentencias);
     inicio.AgregarHijo(new ArbolSintactico(end_program.toString()));
@@ -284,7 +292,7 @@ class CUP$Parser$actions {
 		int sentenciaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		ArbolSintactico sentencia = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaraciones = new ArbolSintactico("Declaracion");
+    ArbolSintactico declaraciones = new ArbolSintactico("DECLARACION");
     declaraciones.AgregarHijo(sentencias);
     declaraciones.AgregarHijo(sentencia);
     RESULT = declaraciones;
@@ -302,7 +310,7 @@ class CUP$Parser$actions {
 		int sentenciaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		ArbolSintactico sentencia = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaraciones = new ArbolSintactico("Declaracion");
+    ArbolSintactico declaraciones = new ArbolSintactico("DECLARACION");
     declaraciones.AgregarHijo(sentencia);
     RESULT = declaraciones;
     
@@ -319,7 +327,7 @@ class CUP$Parser$actions {
 		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object valor1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 
@@ -335,7 +343,7 @@ class CUP$Parser$actions {
 		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object valor1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 
@@ -351,7 +359,7 @@ class CUP$Parser$actions {
 		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object valor1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 
@@ -367,7 +375,7 @@ class CUP$Parser$actions {
 		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object valor1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 
@@ -383,7 +391,7 @@ class CUP$Parser$actions {
 		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object valor1 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(valor1.toString()));
     RESULT = valor;
 
@@ -414,7 +422,7 @@ class CUP$Parser$actions {
 		int parentesis_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object parentesis_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(aritmetica.toString()));
     valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
     valor.AgregarHijo(valor1);
@@ -444,7 +452,7 @@ class CUP$Parser$actions {
 		int parentesis_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object parentesis_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
     valor.AgregarHijo(new ArbolSintactico(parentesis_izquierdo.toString()));
     valor.AgregarHijo(contenido);
@@ -472,7 +480,7 @@ class CUP$Parser$actions {
 		int parentesis_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object parentesis_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("valor Variable");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION VALOR VARIABLE");
     valor.AgregarHijo(new ArbolSintactico(estadistica.toString()));
     valor.AgregarHijo(valor2);
     RESULT = valor;
@@ -519,7 +527,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Variable");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION VARIABLE");
     declaracion.AgregarHijo(new ArbolSintactico(var.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(tipo_variable.toString()));
@@ -531,6 +539,8 @@ class CUP$Parser$actions {
     declaracion.AgregarHijo(valor);
     declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableleft)));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableright)));
     RESULT = declaracion; 
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -538,7 +548,19 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // declaracion ::= ARRAY DOS_PUNTOS TIPO_VARIABLE DOS_PUNTOS DOS_PUNTOS EXPRESION_ARRAY MENOR_QUE MENOS contenido_array END PUNTO_COMA 
+          case 13: // declaracion ::= error 
+            {
+              ArbolSintactico RESULT =null;
+		
+    ArbolSintactico declaracion = new ArbolSintactico("Error");
+    RESULT = declaracion; 
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 14: // declaracion ::= ARRAY DOS_PUNTOS TIPO_VARIABLE DOS_PUNTOS DOS_PUNTOS EXPRESION_ARRAY MENOR_QUE MENOS contenido_array END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int arrayleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).left;
@@ -575,7 +597,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Arreglo");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION ARREGLO");
     declaracion.AgregarHijo(new ArbolSintactico(array.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(tipo_variable.toString()));
@@ -587,6 +609,8 @@ class CUP$Parser$actions {
     declaracion.AgregarHijo(contenido);
     declaracion.AgregarHijo(new ArbolSintactico(end.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(punto_coma.toString()));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableleft)));
+    declaracion.AgregarHijo(new ArbolSintactico(String.valueOf(tipo_variableright)));
     RESULT = declaracion;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
@@ -594,7 +618,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // contenido_array ::= CORCHETE_IZQUIERDO lista_array CORCHETE_DERECHO 
+          case 15: // contenido_array ::= CORCHETE_IZQUIERDO lista_array CORCHETE_DERECHO 
             {
               ArbolSintactico RESULT =null;
 		int corchete_izquierdoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
@@ -607,7 +631,7 @@ class CUP$Parser$actions {
 		int corchete_derechoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object corchete_derecho = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico contenido_array = new ArbolSintactico("Contenido Array");
+    ArbolSintactico contenido_array = new ArbolSintactico("ASIGNACION CONTENIDO ARREGLO");
     contenido_array.AgregarHijo(new ArbolSintactico(corchete_izquierdo.toString()));
     contenido_array.AgregarHijo(lista);
     contenido_array.AgregarHijo(new ArbolSintactico(corchete_derecho.toString()));
@@ -619,7 +643,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // lista_array ::= lista_array COMA valor_variable 
+          case 16: // lista_array ::= lista_array COMA valor_variable 
             {
               ArbolSintactico RESULT =null;
 		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
@@ -632,7 +656,7 @@ class CUP$Parser$actions {
 		int valor_varright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		ArbolSintactico valor_var = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico lista_array = new ArbolSintactico("Lista Array");
+    ArbolSintactico lista_array = new ArbolSintactico("ASIGNACION LISTA ARREGLO");
     lista_array.AgregarHijo(lista);
     lista_array.AgregarHijo(new ArbolSintactico(coma.toString()));
     lista_array.AgregarHijo(valor_var);
@@ -643,14 +667,14 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // lista_array ::= valor_variable 
+          case 17: // lista_array ::= valor_variable 
             {
               ArbolSintactico RESULT =null;
 		int valor1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int valor1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		ArbolSintactico valor1 = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico valor = new ArbolSintactico("Lista Array");
+    ArbolSintactico valor = new ArbolSintactico("ASIGNACION LISTA ARREGLO");
     valor.AgregarHijo(valor1);
     RESULT = valor;   
 
@@ -659,7 +683,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS PRINT IGUAL lista_array END PUNTO_COMA 
+          case 18: // declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS PRINT IGUAL lista_array END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int consoleleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
@@ -687,7 +711,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Imprimir");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION IMPRIMIR");
     declaracion.AgregarHijo(new ArbolSintactico(console.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -703,7 +727,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL valor_variable MENOS MAYOR_QUE valor_variable END PUNTO_COMA 
+          case 19: // declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL valor_variable MENOS MAYOR_QUE valor_variable END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int consoleleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-10)).left;
@@ -740,7 +764,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Imprimir");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION IMPRIMIR");
     declaracion.AgregarHijo(new ArbolSintactico(console.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -759,7 +783,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL valor_variable MENOS MAYOR_QUE contenido_array END PUNTO_COMA 
+          case 20: // declaracion ::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL valor_variable MENOS MAYOR_QUE contenido_array END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int valor_var1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)).left;
@@ -775,7 +799,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Imprimir");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION IMPRIMIR");
     declaracion.AgregarHijo(valor_var1);
     declaracion.AgregarHijo(contenido);
     RESULT = declaracion;
@@ -785,7 +809,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // valor_grafica ::= TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS TIPO_VARIABLE IGUAL valor_variable END PUNTO_COMA 
+          case 21: // valor_grafica ::= TITULO_GRAFICA DOS_PUNTOS DOS_PUNTOS TIPO_VARIABLE IGUAL valor_variable END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int tituloleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
@@ -813,7 +837,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("ASIGNACION CONTENIDO GRAFICA");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -829,7 +853,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // valor_grafica ::= TITULO_EJE DOS_PUNTOS DOS_PUNTOS TIPO_VARIABLE IGUAL contenido_array END PUNTO_COMA 
+          case 22: // valor_grafica ::= TITULO_EJE DOS_PUNTOS DOS_PUNTOS TIPO_VARIABLE IGUAL contenido_array END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int tituloleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
@@ -857,7 +881,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("ASIGNACION CONTENIDO GRAFICA");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -873,7 +897,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // valor_grafica ::= TITULO_EJE DOS_PUNTOS DOS_PUNTOS TIPO_VARIABLE IGUAL valor_variable END PUNTO_COMA 
+          case 23: // valor_grafica ::= TITULO_EJE DOS_PUNTOS DOS_PUNTOS TIPO_VARIABLE IGUAL valor_variable END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int tituloleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)).left;
@@ -901,7 +925,7 @@ class CUP$Parser$actions {
 		int punto_comaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico contenido = new ArbolSintactico("Contenido Grafica");
+    ArbolSintactico contenido = new ArbolSintactico("ASIGNACION CONTENIDO GRAFICA");
     contenido.AgregarHijo(new ArbolSintactico(titulo.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos1.toString()));
     contenido.AgregarHijo(new ArbolSintactico(dos_puntos2.toString()));
@@ -917,7 +941,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // declaracion ::= TIPO_GRAFICA PARENTESIS_IZQUIERDO contenido_grafica EXEC TIPO_GRAFICA END PUNTO_COMA PARENTESIS_DERECHO END PUNTO_COMA 
+          case 24: // declaracion ::= TIPO_GRAFICA PARENTESIS_IZQUIERDO contenido_grafica EXEC TIPO_GRAFICA END PUNTO_COMA PARENTESIS_DERECHO END PUNTO_COMA 
             {
               ArbolSintactico RESULT =null;
 		int tipo_grafica1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-9)).left;
@@ -951,7 +975,7 @@ class CUP$Parser$actions {
 		int punto_coma2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Object punto_coma2 = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico declaracion = new ArbolSintactico("Declaracion Grafica");
+    ArbolSintactico declaracion = new ArbolSintactico("ASIGNACION GRAFICA");
     declaracion.AgregarHijo(new ArbolSintactico(tipo_grafica1.toString()));
     declaracion.AgregarHijo(new ArbolSintactico(par_iz.toString()));
     declaracion.AgregarHijo(cont_graph);
@@ -969,7 +993,7 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // contenido_grafica ::= contenido_grafica valor_grafica 
+          case 25: // contenido_grafica ::= contenido_grafica valor_grafica 
             {
               ArbolSintactico RESULT =null;
 		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
@@ -979,7 +1003,7 @@ class CUP$Parser$actions {
 		int valor_gright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		ArbolSintactico valor_g = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico contenido_grafica= new ArbolSintactico("Lista Grafica");
+    ArbolSintactico contenido_grafica= new ArbolSintactico("ASIGNACION LISTA GRAFICA");
     contenido_grafica.AgregarHijo(lista);
     contenido_grafica.AgregarHijo(valor_g);
     RESULT = contenido_grafica;
@@ -989,14 +1013,14 @@ class CUP$Parser$actions {
           return CUP$Parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // contenido_grafica ::= valor_grafica 
+          case 26: // contenido_grafica ::= valor_grafica 
             {
               ArbolSintactico RESULT =null;
 		int valor_gleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int valor_gright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		ArbolSintactico valor_g = (ArbolSintactico)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		
-    ArbolSintactico contenido_grafica= new ArbolSintactico("Lista Grafica");
+    ArbolSintactico contenido_grafica= new ArbolSintactico("ASIGNACION LISTA GRAFICA");
     contenido_grafica.AgregarHijo(valor_g);
     RESULT = contenido_grafica;
 

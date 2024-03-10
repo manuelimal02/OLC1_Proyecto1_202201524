@@ -50,23 +50,23 @@ public class ArbolSintactico {
                     if (numero2 != 0) {
                         resultado = numero1 / numero2;
                     } else {
-                        return "Error: División por cero";
+                        return "Error: DIVISION ENTRE CERO";
                     }
                     break;
                 case "MOD":
                     if (numero2 != 0) {
                         resultado = numero1 % numero2;
                     } else {
-                        return "Error: Módulo por cero";
+                        return "Error: MODULO ENTRE CERO";
                     }
                     break;
                 default:
-                    return "Error: Operación no válida";
+                    return "Error: OPERACION NO VALIDA";
             }
             return String.valueOf(resultado);
 
         } catch (NumberFormatException e) {
-            return "Error: Las cadenas no son números válidos";
+            return "Error: TRATANDO DE OPERAR UNA CADENA";
         }
     }
     //--------------------------------------------------------------------------
@@ -237,60 +237,60 @@ public class ArbolSintactico {
         for (ArbolSintactico Hijo: Raiz.Hijos){
             EjecutarInterprete(Hijo, Consola, TablaS, tabbedPane);
         }
-        if(Raiz.getElemento()=="Declaracion Variable"){
+        if(Raiz.getElemento()=="ASIGNACION VARIABLE"){
             SimboloNodo SimboloNuevo = new SimboloNodo(
                     Raiz.getHijos().get(5).getElemento(),  
                     Raiz.getHijos().get(2).getElemento(),
                     "Variable",
-                    Raiz.getHijos().get(8).Result
+                    Raiz.getHijos().get(8).Result,
+                    Raiz.getHijos().get(11).getElemento(),
+                    Raiz.getHijos().get(12).getElemento()
             );
             TablaS.add(SimboloNuevo);
             
-        }else if(Raiz.getElemento()=="Declaracion Arreglo"){
+        }else if(Raiz.getElemento()=="ASIGNACION ARREGLO"){
             SimboloNodo SimboloNuevo = new SimboloNodo(
                     Raiz.getHijos().get(5).getElemento(),
                     Raiz.getHijos().get(2).getElemento(),
                     "Array",
-                    Raiz.getHijos().get(8).Result
+                    Raiz.getHijos().get(8).Result,
+                    Raiz.getHijos().get(11).getElemento(),
+                    Raiz.getHijos().get(12).getElemento()
             );
             TablaS.add(SimboloNuevo);
         }
-        else if(Raiz.getElemento()=="Declaracion Imprimir" && Raiz.getHijos().size()==8){
+        else if(Raiz.getElemento()=="ASIGNACION IMPRIMIR" && Raiz.getHijos().size()==8){
             String Variable = imprimirVariable(Raiz.getHijos().get(5).Result);
             Consola.append(Variable+"\n");
         }
-        else if(Raiz.getElemento()=="Declaracion Imprimir" & Raiz.getHijos().size()==11){
+        else if(Raiz.getElemento()=="ASIGNACION IMPRIMIR" & Raiz.getHijos().size()==11){
             String Arreglo = imprimirArreglo(Raiz.getHijos().get(5).Result, Raiz.getHijos().get(8).Result);
             Consola.append(Arreglo+"\n");
         }
-        else if(Raiz.getElemento()=="Declaracion Imprimir" & Raiz.getHijos().size()==2){
+        else if(Raiz.getElemento()=="ASIGNACION IMPRIMIR" & Raiz.getHijos().size()==2){
             String Arreglo = imprimirArreglo(Raiz.getHijos().get(0).Result, Raiz.getHijos().get(1).Result);
             Consola.append(Arreglo+"\n");
         }
-        else if(Raiz.getElemento()=="Declaracion Grafica" & Raiz.getHijos().size()==10){
+        else if(Raiz.getElemento()=="ASIGNACION GRAFICA" & Raiz.getHijos().size()==10){
             if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHBAR")){
-                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaBarra.crearGrafica(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHPIE")){
-                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaCircular.crearGraficaCircular(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }
             else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("GRAPHLINE")){
-                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaLineal.crearGraficaLineas(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }
             else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("HISTOGRAM")){
-                System.out.println(Raiz.getHijos().get(2).Result);
                 String Graph = GraficaHistograma.crearHistograma(Raiz.getHijos().get(2).Result, tabbedPane);
                 Consola.append(Graph+"\n");
             }
         }
-        else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==1){
+        else if(Raiz.getElemento()=="ASIGNACION VALOR VARIABLE" && Raiz.getHijos().size()==1){
             Raiz.Result=Raiz.getHijos().get(0).getElemento();
-            if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().get(0).getElemento().startsWith("\"")){
+            if(Raiz.getElemento()=="ASIGNACION VALOR VARIABLE" && Raiz.getHijos().get(0).getElemento().startsWith("\"")){
                 Raiz.Result=Raiz.getHijos().get(0).getElemento();
             }else{
                 try{
@@ -305,24 +305,7 @@ public class ArbolSintactico {
                     }
                 }
             }
-        }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==1){
-            Raiz.Result=Raiz.getHijos().get(0).getElemento();
-            if(Raiz.Elemento=="valor Variable" && (Raiz.getHijos().get(0).getElemento().startsWith("\""))){
-                Raiz.Result=Raiz.getHijos().get(0).getElemento();
-            }else{
-                try{
-                    double PRUEBA = Double.parseDouble(Raiz.getHijos().get(0).getElemento()); 
-                    Raiz.Result=Raiz.getHijos().get(0).getElemento(); 
-                }catch (Exception e){
-                    String Valor = this.BuscarVariable(TablaS, Raiz.getHijos().get(0).getElemento());
-                    if (Valor.equals("ERROR SEMANTICO")){
-                        System.out.println("ERROR SEMANTICO-VARIABLE NO ENCONTRADA");
-                    }else{
-                        Raiz.Result=Valor;
-                    }
-                }
-            }
-        }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==4){
+        }else if(Raiz.getElemento()=="ASIGNACION VALOR VARIABLE" && Raiz.getHijos().size()==4){
             if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MEDIA")){
                 String Media = calcularMedia(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Media;
@@ -330,7 +313,6 @@ public class ArbolSintactico {
                 String Mediana = calcularMediana(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Mediana;
             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MODA")){
-                System.out.println("-------------"+Raiz.getHijos().get(2).Result);
                 String Moda = calcularModa(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Moda;
             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("VARIANZA")){
@@ -343,7 +325,7 @@ public class ArbolSintactico {
                 String Minimo = encontrarValorMinimo(Raiz.getHijos().get(2).Result);
                 Raiz.Result=Minimo;
             }
-        }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==2){
+        }else if(Raiz.getElemento()=="ASIGNACION VALOR VARIABLE" && Raiz.getHijos().size()==2){
             if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MEDIA")){
                 String Media = calcularMedia(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Media;
@@ -351,7 +333,6 @@ public class ArbolSintactico {
                 String Mediana = calcularMediana(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Mediana;
             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("MODA")){
-                System.out.println("-------------"+Raiz.getHijos().get(1).Result);
                 String Moda = calcularModa(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Moda;
             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("VARIANZA")){
@@ -364,7 +345,7 @@ public class ArbolSintactico {
                 String Minimo = encontrarValorMinimo(Raiz.getHijos().get(1).Result);
                 Raiz.Result=Minimo;
             }      
-        }else if(Raiz.getElemento()=="valor Variable" && Raiz.getHijos().size()==6){
+        }else if(Raiz.getElemento()=="ASIGNACION VALOR VARIABLE" && Raiz.getHijos().size()==6){
              if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("SUM")){
                 String Resultado=realizarOperacion(Raiz.getHijos().get(2).Result, Raiz.getHijos().get(4).Result, "SUM");
                 Raiz.Result = Resultado;
@@ -381,17 +362,17 @@ public class ArbolSintactico {
                 String Resultado=realizarOperacion(Raiz.getHijos().get(2).Result, Raiz.getHijos().get(4).Result, "MOD");
                 Raiz.Result = Resultado;
              }
-        }else if(Raiz.getElemento()=="Lista Array" && Raiz.getHijos().size()==3){
+        }else if(Raiz.getElemento()=="ASIGNACION LISTA ARREGLO" && Raiz.getHijos().size()==3){
             Raiz.Result=Raiz.getHijos().get(0).Result + Raiz.getHijos().get(1).getElemento()+Raiz.getHijos().get(2).Result; 
-        }else if(Raiz.getElemento()=="Lista Array" && Raiz.getHijos().size()==1){
+        }else if(Raiz.getElemento()=="ASIGNACION LISTA ARREGLO" && Raiz.getHijos().size()==1){
             Raiz.Result=Raiz.getHijos().get(0).Result; 
-        }else if(Raiz.getElemento()=="Contenido Array"){
+        }else if(Raiz.getElemento()=="ASIGNACION CONTENIDO ARREGLO"){
             Raiz.Result=Raiz.getHijos().get(1).Result;
-        }else if(Raiz.getElemento()=="Lista Grafica" && Raiz.getHijos().size()==2){
+        }else if(Raiz.getElemento()=="ASIGNACION LISTA GRAFICA" && Raiz.getHijos().size()==2){
             Raiz.Result=Raiz.getHijos().get(0).Result + " | "+Raiz.getHijos().get(1).Result; 
-        }else if(Raiz.getElemento()=="Lista Grafica" && Raiz.getHijos().size()==1){
+        }else if(Raiz.getElemento()=="ASIGNACION LISTA GRAFICA" && Raiz.getHijos().size()==1){
             Raiz.Result=Raiz.getHijos().get(0).Result; 
-        }else if(Raiz.getElemento()=="Contenido Grafica"){
+        }else if(Raiz.getElemento()=="ASIGNACION CONTENIDO GRAFICA"){
             if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("TITULO")){
                 Raiz.Result="TITULO: "+Raiz.getHijos().get(5).Result;
             }else if(Raiz.getHijos().get(0).getElemento().toUpperCase().equals("EJEX")){

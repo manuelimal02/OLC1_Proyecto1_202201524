@@ -8,15 +8,14 @@ import org.jfree.data.category.*;
  * @author manuel
  */
 public class GraficaHistograma {
-        public static String crearHistograma(String cadena, JTabbedPane tabbedPane) {
+    public static String crearHistograma(String cadena, JTabbedPane tabbedPane) {
         String[] partes = cadena.split("\\|");
         String titulo = null;
         int[] values = null;
-
         for (String parte : partes) {
             parte = parte.trim();
             if (parte.startsWith("TITULO:")) {
-                titulo = parte.split(":")[1].trim().replace("\"", ""); // Eliminar comillas
+                titulo = parte.split(":")[1].trim().replace("\"", "");
             } else if (parte.startsWith("VALUES:")) {
                 String[] valuesArray = parte.split(":")[1].trim().split(",");
                 values = new int[valuesArray.length];
@@ -25,11 +24,9 @@ public class GraficaHistograma {
                 }
             }
         }
-
         if (titulo == null || values == null) {
             return "Error: Faltan Datos Para El Histograma";
         }
-
         DefaultCategoryDataset dataset = createDataset(values);
         JFreeChart barChart = ChartFactory.createBarChart(
                 titulo,
@@ -53,8 +50,6 @@ public class GraficaHistograma {
             nuevoPanel.add(chartPanel);
             tabbedPane.addTab(titulo, nuevoPanel);
         }
-
-        // Imprimir información ordenada
         String informacion = obtenerInformacion(values);
         System.out.println(informacion);
         return "Gráfica Histograma '" + titulo + "' Creada Correctamente.\n"+informacion;
@@ -62,8 +57,6 @@ public class GraficaHistograma {
 
     private static DefaultCategoryDataset createDataset(int[] values) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        // Calcular frecuencia de cada valor
         java.util.Map<Integer, Integer> frecuencias = new java.util.HashMap<>();
         int frecuenciaAcumulada = 0;
 
@@ -71,8 +64,6 @@ public class GraficaHistograma {
             frecuencias.put(value, frecuencias.getOrDefault(value, 0) + 1);
             frecuenciaAcumulada++;
         }
-
-        // Agregar datos al dataset
         for (java.util.Map.Entry<Integer, Integer> entry : frecuencias.entrySet()) {
             int valor = entry.getKey();
             int frecuenciaAbsoluta = entry.getValue();
@@ -92,39 +83,32 @@ public class GraficaHistograma {
         }
         return null;
     }
-
     private static String obtenerInformacion(int[] values) {
-    // Calcular frecuencia de cada valor
-    java.util.Map<Integer, Integer> frecuencias = new java.util.HashMap<>();
-    int frecuenciaAcumulada = 0;
+        java.util.Map<Integer, Integer> frecuencias = new java.util.HashMap<>();
+        int frecuenciaAcumulada = 0;
+        StringBuilder informacion = new StringBuilder("------------------------------\n");
+        informacion.append("Analisis de Arreglo\n");
+        informacion.append("------------------------------\n");
+        informacion.append("Valor - F - Fa - Fr\n");
+        for (int value : values) {
+            frecuencias.put(value, frecuencias.getOrDefault(value, 0) + 1);
+            frecuenciaAcumulada++;
+        }
+        int acumuladaTotal = 0;
+        for (java.util.Map.Entry<Integer, Integer> entry : frecuencias.entrySet()) {
+            int valor = entry.getKey();
+            int frecuenciaAbsoluta = entry.getValue();
+            double frecuenciaRelativa = (double) frecuenciaAbsoluta / values.length;
+            double frecuenciaAcumuladaRelativa = (double) frecuenciaAcumulada / values.length;
 
-    StringBuilder informacion = new StringBuilder("Analisis de Arreglo\n");
-    informacion.append("------------------------------\n");
-    informacion.append("Valor - F - Fa - Fr\n");
+            informacion.append(String.format("%-6d %-4d %-5d %-5.2f%%\n", valor, frecuenciaAbsoluta,
+                    acumuladaTotal + frecuenciaAbsoluta, frecuenciaRelativa * 100));
 
-    for (int value : values) {
-        frecuencias.put(value, frecuencias.getOrDefault(value, 0) + 1);
-        frecuenciaAcumulada++;
+            acumuladaTotal += frecuenciaAbsoluta;
+        }
+        informacion.append("------------------------------\n");
+        informacion.append(String.format("Totales: %-4d %-5d 100%%\n", values.length, acumuladaTotal));
+        informacion.append("------------------------------\n");
+        return informacion.toString();
     }
-
-    int acumuladaTotal = 0;
-    for (java.util.Map.Entry<Integer, Integer> entry : frecuencias.entrySet()) {
-        int valor = entry.getKey();
-        int frecuenciaAbsoluta = entry.getValue();
-        double frecuenciaRelativa = (double) frecuenciaAbsoluta / values.length;
-        double frecuenciaAcumuladaRelativa = (double) frecuenciaAcumulada / values.length;
-
-        informacion.append(String.format("%-6d %-4d %-5d %-5.2f%%\n", valor, frecuenciaAbsoluta,
-                acumuladaTotal + frecuenciaAbsoluta, frecuenciaRelativa * 100));
-
-        acumuladaTotal += frecuenciaAbsoluta;
-    }
-
-    informacion.append("------------------------------\n");
-    informacion.append(String.format("Totales: %-4d %-5d 100%%\n", values.length, acumuladaTotal));
-
-    return informacion.toString();
-}
-
-
 }

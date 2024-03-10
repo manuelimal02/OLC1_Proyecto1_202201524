@@ -13,6 +13,7 @@ import dataforge.ErrorLexico;
 %cup
 %unicode
 %ignorecase
+%column
 
 %{
 public LinkedList<ErrorLexico> lexicalErrors;
@@ -34,7 +35,7 @@ COMENTARIO_MULTI = "<!"{SIMBOLO_EXCLAMAC}* "!>"
 
 //------------------------------------------------------------------------------
 CADENA = \"([^\"\r\n]*)\"
-EXPRESION = [a-zA-Z][a-zA-Z0-9]+
+EXPRESION = [a-zA-Z][a-zA-Z0-9]*
 EXPRESION_ARRAY = \@{EXPRESION}
 ENTERO = [0-9]+
 DECIMAL = {ENTERO}\.{ENTERO} 
@@ -219,7 +220,7 @@ DECIMAL = {ENTERO}\.{ENTERO}
                     return new Symbol(sym.IGUAL, yyline, yycolumn, yytext());
 }
 
-"\n"                    {yycolumn+=1;}
+\n                    {yycolumn=1;}
 
 {EN_BLANCO}             {}
 

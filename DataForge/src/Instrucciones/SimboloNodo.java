@@ -8,12 +8,16 @@ public class SimboloNodo {
     private String tipo;
     private String rol;
     private String valor;
+    private String linea;
+    private String columna;
 
-    public SimboloNodo(String nombre, String tipo, String rol, String valor) {
+    public SimboloNodo(String nombre, String tipo, String rol, String valor, String linea, String columna) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.rol = rol;
         this.valor = valor;
+        this.linea = linea;
+        this.columna = columna;
     }
 
     public String getNombre() {
@@ -48,5 +52,21 @@ public class SimboloNodo {
         this.valor = valor;
     }
 
-           
+    public String getLinea() {
+        return linea;
+    }
+
+    public void setLinea(String linea) {
+        this.linea = linea;
+    }
+
+    public String getColumna() {
+        return columna;
+    }
+
+    public void setColumna(String columna) {
+        this.columna = columna;
+    }
+
+    
 }
