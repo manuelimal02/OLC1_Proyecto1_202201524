@@ -1,0 +1,86 @@
+terminal VAR, DOUBLE, CHAR, END
+terminal MENOS, DOS_PUNTOS, MENOR_QUE, PUNTO_COMA, IGUAL, MAYOR_QUE, ARROBA, CORCHETE_IZQUIERDO, CORCHETE_DERECHO
+terminal PARENTESIS_IZQUIERDO, PARENTESIS_DERECHO, COMA
+terminal RES, SUM, EXEC, MODA, MEDIA, PRINT, COLUMN, CONSOLE, MEDIANA, GRAPHBAR, GRAPHPIE, GRAPHLINE, HISTOGRAM
+terminal CADENA, ENTERO, DECIMAL , EXPRESION, PROGRAM, END_PROGRAM, ARRAY, DIV, MAX, MIN, MOD, MUL
+terminal EJEX, EJEY, LABEL, TITULO, VALUES, TITULOX, TITULOY
+            
+non terminal <inicio>, <declaración>, <declaraciones>, <valor variable>, <contenido array>, <lista array>, <contenido grafica>, <Tipo Grafica>, <Título Grafica>, <Título Eje>
+
+start with inicio; 
+
+<inicio>:: = PROGRAM <declaraciones> END_PROGRAM
+
+<declaraciones>:: = <declaraciones> <declaración> | <declaración>
+
+<declaración>:: = VAR DOS_PUNTOS <Tipo Variable> DOS_PUNTOS DOS_PUNTOS EXPRESION MENOR_QUE MENOS <valor variable> END PUNTO_COMA
+
+<declaración>::= ARRAY DOS_PUNTOS <Tipo Variable> DOS_PUNTOS DOS_PUNTOS EXPRESION_ARRAY MENOR_QUE MENOS <contenido array> END PUNTO_COMA
+
+<declaración>::= CONSOLE DOS_PUNTOS DOS_PUNTOS PRINT IGUAL <lista array> END PUNTO_COMA
+
+<declaración>::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL <valor variable> MENOS MAYOR_QUE <valor variable> END PUNTO_COMA
+
+<declaración>::= CONSOLE DOS_PUNTOS DOS_PUNTOS COLUMN IGUAL <valor variable> MENOS MAYOR_QUE <contenido array> END PUNTO_COMA
+
+<declaración>::= <Tipo Grafica> PARENTESIS_IZQUIERDO <contenido grafica> EXEC <Tipo Grafica> END PUNTO_COMA PARENTESIS_DERECHO END PUNTO_COMA
+
+<Tipo Variable>::= DOUBLE
+| CHAR PARENTESIS_IZQUIERDO PARENTESIS_DERECHO
+
+
+<valor variable>:: = ENTERO
+| DECIMAL 
+| CADENA 
+| EXPRESION
+| EXPRESION_ARRAY
+| SUM PARENTESIS_IZQUIERDO <valor variable> COMA <valor variable> PARENTESIS_DERECHO
+| RES PARENTESIS_IZQUIERDO <valor variable> COMA <valor variable> PARENTESIS_DERECHO
+| MUL PARENTESIS_IZQUIERDO <valor variable> COMA <valor variable> PARENTESIS_DERECHO
+| DIV PARENTESIS_IZQUIERDO <valor variable> COMA <valor variable> PARENTESIS_DERECHO
+| MOD PARENTESIS_IZQUIERDO <valor variable> COMA <valor variable> PARENTESIS_DERECHO
+| MEDIA PARENTESIS_IZQUIERDO <contenido array> PARENTESIS_DERECHO
+| MEDIANA PARENTESIS_IZQUIERDO <contenido array> PARENTESIS_DERECHO
+| MODA PARENTESIS_IZQUIERDO <contenido array> PARENTESIS_DERECHO
+| VARIANZA PARENTESIS_IZQUIERDO <contenido array> PARENTESIS_DERECHO
+| MAX PARENTESIS_IZQUIERDO <contenido array> PARENTESIS_DERECHO
+| MIN PARENTESIS_IZQUIERDO <contenido array> PARENTESIS_DERECHO
+| MEDIA PARENTESIS_IZQUIERDO <valor variable> PARENTESIS_DERECHO
+| MEDIANA PARENTESIS_IZQUIERDO <valor variable> PARENTESIS_DERECHO
+| MODA PARENTESIS_IZQUIERDO <valor variable> PARENTESIS_DERECHO
+| VARIANZA PARENTESIS_IZQUIERDO <valor variable> PARENTESIS_DERECHO
+| MAX PARENTESIS_IZQUIERDO <valor variable> PARENTESIS_DERECHO
+| MIN PARENTESIS_IZQUIERDO <valor variable> PARENTESIS_DERECHO
+
+
+<contenido array>:: = CORCHETE_IZQUIERDO <lista array> CORCHETE_DERECHO
+<lista array>:: = <lista array> COMA <valor variable>
+| <valor variable>
+
+<Tipo Grafica>:: = GRAPHBAR
+| GRAPHPIE
+| GRAPHLINE
+| HISTOGRAM
+
+
+<contenido grafica>::= <contenido grafica> <valor grafica>
+|<valor grafica>
+
+
+<valor grafica>:: = <Título Grafica> DOS_PUNTOS DOS_PUNTOS <Tipo Variable>IGUAL <valor variable> END PUNTO_COMA
+| <Título Eje> DOS_PUNTOS DOS_PUNTOS <Tipo Variable>IGUAL contenido_array END PUNTO_COMA
+| <Título Eje>DOS_PUNTOS DOS_PUNTOS <Tipo Variable>IGUAL valor_variable END PUNTO_COMA
+
+
+<Título Grafica>::= TITULO
+| TITULOX
+| TITULOY
+
+
+<Título Eje>::= EJEX
+| EJEY
+| VALUES
+| LABEL
+
+
+

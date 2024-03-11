@@ -18,6 +18,7 @@ public class SimboloNodo {
         this.valor = valor;
         this.linea = linea;
         this.columna = columna;
+        /*Comentario De Prueba*/
     }
 
     public String getNombre() {
