@@ -66,7 +66,7 @@ public class ArbolSintactico {
             return String.valueOf(resultado);
 
         } catch (NumberFormatException e) {
-            return "Error: TRATANDO DE OPERAR UNA CADENA";
+            return "ERROR: NUMEROS NEGATIVOS O LETRAS";
         }
     }
     //--------------------------------------------------------------------------
